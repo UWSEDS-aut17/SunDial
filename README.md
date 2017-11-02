@@ -8,7 +8,7 @@ We aim to develop machine learning models based on weather, utility, and solar c
 ## Data Sources
 
 1. [Google's Project Sunroof](https://www.google.com/get/sunroof#p=0)
-2. [U.S. Data Climate Normals (Data.gov)](https://catalog.data.gov/dataset/u-s-daily-climate-normals-1981-2010)
+2. [U.S. Daily Climate Normals (Data.gov)](https://catalog.data.gov/dataset/u-s-daily-climate-normals-1981-2010)
 3. [U.S. Energy Price Data (Data.gov)](https://catalog.data.gov/dataset?tags=energy-prices)
 
 # Project Repository
