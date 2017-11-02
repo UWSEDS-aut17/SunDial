@@ -12,9 +12,10 @@ https://openei.org/wiki/Utility_Rate_Database
 US weather data:
 https://www.ncdc.noaa.gov/
 
-Battery / Solar data soruces: https://www.energysage.com/solar/solar-energy-storage/what-are-the-best-batteries-for-solar-panels/
-http://energystorage.org/energy-storage/facts-figures
-https://www.energystorageexchange.org
+Battery / Solar data soruces: 
+- https://www.energysage.com/solar/solar-energy-storage/what-are-the-best-batteries-for-solar-panels/
+- http://energystorage.org/energy-storage/facts-figures
+- https://www.energystorageexchange.org
 
 
 Evaluation
