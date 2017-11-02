@@ -1,9 +1,15 @@
-# PROBLEM STATEMENT / SUMMARY
-With the costs of solar cells and batteries continuing to decline, solar cell-battery combination systems have become viable options to save on electricity costs while offseting carbon emisions. However, with electricity demand, grid ulility cost, and available sunlight all changing dynamically, the most profitible strategy to utilize generated electricity and meet required electicity demand with such a system is not intuitive. We aim to develop machine learning models based on weather, utility, and battery/solar data to predict the most profitable strategy to operate a solar+battery system in a dynamic environment. We indend our platform to be widely applicible accross scales ("single family home" -> "large data center" -> "county-wide electricity network") and hope to produce a general economic viablity assessment of such solar+battery installations in different regions across the US.
+# Working titles: Sunscreen? Solarscale? Ra Balance? 
 
-link?
+## Problem Statement
+With the costs of solar cells and batteries continuing to decline, solar cell-battery combination systems have become viable options to save on electricity costs while offseting carbon emissions. However, electricity demand, ulility costs, and sunlight avaliability all change dynamically, making it difficult for consumers to optimize their utilization of renewable energy sources.
 
-image?
+We aim to develop machine learning models based on weather, utility, and solar cell-battery data to optimize solar battery utilization in a dynamic environment. Our platform will be built to scale for different energy needs, from single family homes to large data centers to county-wide electricity networks. Furthermore, we hope to produce a general economic viablity assessment of solar battery installations in different regions across the United States.
+
+## Data Sources
+
+1. [Google's Project Sunroof](https://www.google.com/get/sunroof#p=0)
+2. [U.S. Data Climate Normals (Data.gov)](https://catalog.data.gov/dataset/u-s-daily-climate-normals-1981-2010)
+3. [U.S. Energy Price Data (Data.gov)](https://catalog.data.gov/dataset?tags=energy-prices)
 
 # Project Repository
 
@@ -19,7 +25,10 @@ You should do the following:
   
 Each person in the team should make at least one commit to the repository.
 
-Rubric. Items 1-4 are group grades. Item 5 is an individual grade.
+## Rubric
+
+Items 1-4 are group grades. Item 5 is an individual grade.
+
 1. Created repository with all team members as collaborators, and README file describes the questions addressed by the project. (1 pt)
 2. data.md has a Requirements section with appropriate content. (1 pt)
 3. data.md has a Sources section with appropriate content. (1 pt)
