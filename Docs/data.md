@@ -28,6 +28,7 @@ Battery / Solar data soruces:
 
 
 Evaluation
++--------------+----------------+--------+------+------+
 |              | Google Sunroof | OpenEI | NOAA | DAWN |
 +--------------+----------------+--------+------+------+
 |Utility Price |                |    x   |      |      |
