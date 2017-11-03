@@ -1,6 +1,11 @@
 This document contains information on the data will will use in our project
 
 Requirements
+To fufill the aims decribed in the README, we require:
+1. Dataset for utility price
+2. Dataset for weather (to predict solar generation), and also other weather data to use to model ultility price if dependant on other renewables (rain, wind, etc.)
+3. Data on battery (state of health, capacity, etc.)
+4. Dataset on energy demand for several "test" installations (residential home, data center, gridscale)
 
 Sources
 Goolge Project Sunroof: https://www.google.com/get/sunroof/data-explorer/
