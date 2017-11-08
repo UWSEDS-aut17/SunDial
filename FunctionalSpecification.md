@@ -13,7 +13,8 @@
 ### Elements
 - What solar/battery feartures would be most responsible for optimizing costs?
 - What other elements (for eg. weather) are responsible for the costs?
-- Anything else?
+- See Flowchart schematic for our workflow (Model_flowchart_outline.tif)
+- The above tasks can be implemented in parellel and get combined
 
 ### Use Cases
 - TODO
