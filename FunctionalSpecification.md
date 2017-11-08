@@ -13,8 +13,14 @@
 ### Elements
 - What solar/battery feartures would be most responsible for optimizing costs?
 - What other elements (for eg. weather) are responsible for the costs?
-- See Flowchart schematic for our workflow (Model_flowchart_outline.tif)
-- The above tasks can be implemented in parellel and get combined
+- See Flowchart schematic for our [workflow](Model_flowchart_outline.png)
+- The following components of the workflow can be developed in paralel then integrated:
+1. Model to predict future utility costs (using historical utility data and weather forecast)
+2. Model to predict future energy demand (using histortical data, weather forecast)
+3. Model to predict future PV generation (using Weather data and knoweldge of PV generation)
+4. Model to predict battery state of health (using battery cycle data)
+
+These four elements will work together to solve an optimization problem to minimize costs, which will decide (A) what to do with generated electricity (from PV and batter)y and (B) where to receive electricity to meet demand (grid, PV, battery)
 
 ### Use Cases
 - TODO
