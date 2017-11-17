@@ -1,4 +1,4 @@
-## Component List
+﻿## Component List
 
 - Energy price modeling
 - Energy Demand modeling
@@ -26,11 +26,16 @@
 5. How it works (ideally with pseudo code).
 
 ### PV output modeling
-1. What it does. This should be a high level description of the roles of the component
-2. Name:  This should be the name that you use in the component's implementation (e.g., the name of a python class or function).
-3. Inputs. Be specific about the data types. For DataFrames, specify the column names and the types of the column values.
-4. Outputs. Same consideration as with inputs.
-5. How it works (ideally with pseudo code).
+1. What it does: This component of the model has two tier calculations: a) First, it integrates the weather data and the solar data to predict effective solar insolation per square meter received by solar panels.
+b) Next, it consolidates photo-voltaic (solar panels) data and effective solar irradiance data (per squared meter) to calculate the gross electricty generated per squared meter from solar panels.
+
+2. Name:  pv_output
+3. Inputs. Input data would be in dataframes with columns as Zenith angle (degrees), Azimuth angle(degrees), latitude of location(degrees), Air Mass, cloud cover(%), Time of the day(24-Hours format), Day of the year(mmddyyyy), module tilt(degrees), efficiency of the panel(%), Area of the panels(sq.m)
+4. Outputs. Output data would be electricity generated per squared meter of panels (KWh/sq.m) and total electricity generated from the installation(KWh)
+5. For the entered time and day and angle tilt of solar panels
+-- check previous years' weather data for the particular date and time and solar data as per angles and latitude 
+-- predicts future solar insolation
+-- calculates gross electricity generation from the panels as per entered tilt of panels
 
 ### Battery State of Health modeling
 1. What it does: The battery model calculates expected degradation of the battery due to a) time and b) cycles, and relates this degradation to cost. Thus, each battery cycle will have a "cost penalty" due to the impact of that cycle on degradation
