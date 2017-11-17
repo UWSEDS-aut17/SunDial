@@ -7,11 +7,16 @@
 - Optimization Procedure
 
 ### Energy price modeling
-1. What it does. This should be a high level description of the roles of the component.
-2. Name. This should be the name that you use in the component's implementation (e.g., the name of a python class or function).
-3. Inputs. Be specific about the data types. For DataFrames, specify the column names and the types of the column values.
-4. Outputs. Same consideration as with inputs.
-5. How it works (ideally with pseudo code).
+1. Models the energy and price relationship over time
+	* Uses the past energy prices over time for each location.
+	* Uses the past weather forecast for the location.
+	* Uses the future forecasts along with the above mentioned features to build a model to predict price of energy for the next day.
+2. `EnergyPriceModel`
+3. Inputs: Energy-Price data from CA ISO and Weather forecast data from darksky
+	* Enery-Price data will be used to consider Locational Marginal Prices (LMP) over an hour with units [$/MWh]
+	* Weather forecast data would provide columns like temperature [˚C] & future_forecast [hourly ˚C] 
+4. Prices for energy over time [$/MWh]
+5. Gather appropriate features from the datasets in a dataframe and make splits for train and test data. Train the model and validate the model by testing it using the test data. Save this model and predict prices given the future forecast and previous energy prices.
 
 ### Energy Demand modeling
 1. What it does. This should be a high level description of the roles of the component.
