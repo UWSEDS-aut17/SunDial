@@ -19,11 +19,21 @@
 5. Gather appropriate features from the datasets in a dataframe and make splits for train and test data. Train the model and validate the model by testing it using the test data. Save this model and predict prices given the future forecast and previous energy prices.
 
 ### Energy Demand modeling
-1. What it does. This should be a high level description of the roles of the component.
-2. Name. This should be the name that you use in the component's implementation (e.g., the name of a python class or function).
-3. Inputs. Be specific about the data types. For DataFrames, specify the column names and the types of the column values.
-4. Outputs. Same consideration as with inputs.
-5. How it works (ideally with pseudo code).
+1. What it does: This component looks at energy demand and correlates/groups it with weather observations to determine patterns in demand (ie higher demand when hot/cold).
+2. Name: energy_demand
+3. Inputs: 
+	* Energy demand data
+	* Weather observations (temperature, cloud cover)
+4. Outputs:
+	* Energy demand correlation with various weather conditions
+5. How it works:
+	* Energy demand with timestamps loaded
+	* Weather observations with timestamps loaded
+	* Matching of energy demand and weather observations to, at minimum, the day. Ideally by 12-hour, 1-hour periods best.
+	* Determining correlation of energy demand to various temperature ranges
+		* With hot (ie >59F or >15C)
+		* With cold (ie <41F or <5C)
+	* Determining correlation of energy demand to cloud cover
 
 ### PV output modeling
 1. What it does: This component of the model has two tier calculations: a) First, it integrates the weather data and the solar data to predict effective solar insolation per square meter received by solar panels.
