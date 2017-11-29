@@ -2,40 +2,50 @@
 
 from geopy.geocoders import Nominatim
 
-# Lets look at the forecast every day at noon 
+# Lets look at the forecast every day at noon
 # to decide what to do the next day (starting at midnight).
 
-DarkSky_key = '[875f84f827afd16b1e3ec11c7f6a720b]' # YOUR API KEY HERE
+api_key = '[875f84f827afd16b1e3ec11c7f6a720b]' # YOUR API KEY HERE
 start_date = 1451606400 # 1/1/2016, UNIX epoch time
-d = []
+time_forecast = 1477915200 #UNIX epoch time
 
 def convert_latlong(address):
+	""" Uses geopy to convert address into lat-lng coordinates.
+	"""
 	geolocator = Nominatim()
 	location = geolocator.geocode(address)
 	return (location.latitude, location.longitude)
 
-lat, lng = convert_latlong("Salem, Oregon")
+def download_weather_year(api_key, lat, lng, fcast):
+	days = []
+	coords = '{},{}'.format(lat, lng)
+	base_url = 'https://api.darksky.net/forecast'
 
-for ii in range(365):  
-    URL_json = 'https://api.darksky.net/forecast/' + DarkSky_key + '/34.9530,-120.4357,' + str(time_forecast) + '?exclude=currently,minutely,daily,alerts,flags'
-    forecast_filename = utils.get_data(URL_json,'json')
-    d.append({'time': time_forecast, 'Name': forecast_filename})
-    time_forecast = time_forecast + 3600*24
+	# get a forecast for every day
+	for i in range(365):
+		print("Downloading day {}.".format(i))
+	    json_url = "{}/{}/{}/{}/?exclude=currently,minutely,daily,alerts,flags".format(api_key, lat, lng, fcast)
+	    forecast_f = utils.get_data(json_url,'json')
+	    df.append({'time': time_forecast, 'Name': forecast_f})
 
-df_SMforecast_filenames = pd.DataFrame(d)
+		time_forecast = time_forecast + 3600*24
 
-df_SMforecast_filenames.to_csv('SM_forecast_filenames.csv')
+	sm_forecast = pd.DataFrame(d)
+	sm_forecast.to_csv('SM_forecast_filenames.csv')
+	print("Download completed.")
 
 #Salem, OR
-time_forecast = 1477915200 #UNIX epoch time
-d = []
-for ii in range(365):
-      
-    URL_json = 'https://api.darksky.net/forecast/' + DarkSky_key + '/44.9429,-123.0351,' + str(time_forecast) + '?exclude=currently,minutely,daily,alerts,flags'
-    forecast_filename = utils.get_data(URL_json,'json')
-    d.append({'time': time_forecast, 'Name': forecast_filename})
-    time_forecast = time_forecast + 3600*24
 
-df_Salemforecast_filenames = pd.DataFrame(d)
+#d = []
+#for ii in range(365):
+#
+#    URL_json = 'https://api.darksky.net/forecast/' + DarkSky_key + '/44.9429,-123.0351,' + str(time_forecast) + '?exclude=currently,minutely,daily,alerts,flags'
+#    forecast_filename = utils.get_data(URL_json,'json')
+#    d.append({'time': time_forecast, 'Name': forecast_filename})
+#    time_forecast = time_forecast + 3600*24
 
-df_Salemforecast_filenames.to_csv('Salem_forecast_filenames.csv')
+#lat, lng = convert_latlong("Salem, Oregon")
+
+#df_Salemforecast_filenames = pd.DataFrame(d)
+
+#df_Salemforecast_filenames.to_csv('Salem_forecast_filenames.csv')
