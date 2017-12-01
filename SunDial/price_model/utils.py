@@ -2,7 +2,6 @@ import urllib
 from urllib import request
 import os
 import hashlib
-import pandas as pd
 import zipfile
 
 

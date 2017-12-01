@@ -8,7 +8,7 @@ RESULT_FILENAME = "./price_time.csv"
 
 
 def load_xml(data_file):
- 	print(data_file)
+	print(data_file)
 	with open(data_file, 'r') as src:
 		soup = BeautifulSoup(src, 'lxml')
 	return soup
