@@ -18,6 +18,9 @@ def process_data():
 	df_price = pd.read_csv(PRICE_DATA_FILENAME)
 	df_price["time"] = pd.to_datetime(df_price["time"])
 	df_price = df_price.sort_values(by="time")
+
+	col_titles = ["lmp_value", "time"]
+	df_price = df_price.reindex(columns=col_titles)	
 	datetime_frame = pd.DatetimeIndex(pd.to_datetime(df_price['time']))
 	df_price["hour"] = datetime_frame.hour
 	df_price["day"] = datetime_frame.dayofweek
@@ -27,7 +30,7 @@ def process_data():
 	df_weather["time"] = pd.to_datetime(df_weather["time"])
 
 	m_price_frame = pd.merge(df_price, df_weather, how='inner', on="time")
-	drop_columns = ["time", "latitude", "longitude", "precipProbability", "uvIndex"]
+	drop_columns = ["latitude", "longitude", "precipProbability", "uvIndex"]
 	m_price_frame = m_price_frame.drop(drop_columns, axis=1)
 
 	# remap values of summary to a known dictionary list
