@@ -1,4 +1,6 @@
 import numpy as numpy
+from matplotlib import pyplot as plt
+import seaborn as sns
 from process_data import process_data
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
