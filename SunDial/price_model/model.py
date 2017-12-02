@@ -8,10 +8,11 @@ from sklearn.metrics import explained_variance_score
 from sklearn.metrics import mean_absolute_error
 from sklearn.metrics import mean_squared_error
 from sklearn.metrics import r2_score
+from sklearn import svm
 
 def model(X, y):
 	Xtrain, Xtest, ytrain, ytest = train_test_split(X, y)
-	model = LinearRegression(normalize=True)
+	model = svm.SVR(kernel='rbf',C=100,gamma=.001) #LinearRegression(normalize=True)
 
 	model.fit(Xtrain, ytrain)
 	ypred = model.predict(Xtest)
@@ -22,6 +23,14 @@ def model(X, y):
 	print mean_squared
 	r_squared = r2_score(ytest, ypred, multioutput='raw_values')
 	print r_squared
+
+	x_vals = Xtest[:, 5]
+	y_vals = model.predict(Xtest)
+
+	plt.scatter(Xtest[:, 5], ytest, color='g')
+	plt.scatter(Xtest[:, 5], model.predict(Xtest),color='b')
+	plt.show()
+
 
 def main():
 	price_data, headers = process_data()
