@@ -1,8 +1,6 @@
 import os
 import pandas as pd
 from dateutil import parser
-import numpy as np
-
 
 PRICE_DATA_FILENAME = "../data/sm_price/price_time.csv"
 WEATHER_DATA_FILENAME = "../data/SM_forecast_2016.csv"
@@ -41,7 +39,7 @@ def process_data():
 	m_price_frame = m_price_frame.fillna(0.0)
 
 	# m_price_frame.to_csv(RESULT_FILENAME)
-	return m_price_frame.values
+	return m_price_frame.values, m_price_frame.columns.values
 
 def main():
 	process_data()
