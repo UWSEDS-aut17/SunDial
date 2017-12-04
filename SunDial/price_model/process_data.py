@@ -42,11 +42,7 @@ def process_data():
 	m_price_frame = m_price_frame.fillna(0.0)
 
 	# m_price_frame.to_csv(RESULT_FILENAME)
-
-	# print m_price_frame.head()
 	return m_price_frame
-
-	# return m_price_frame.values, m_price_frame.columns.values
 
 def get_date_range(df_price_frame, train_start, train_end, test_start, test_end):
 	train_mask = (df_price_frame.index > train_start) & (df_price_frame.index < train_end) & (df_price_frame["hour"] >= 0) 
