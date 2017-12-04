@@ -48,6 +48,21 @@ def process_data():
 
 	# return m_price_frame.values, m_price_frame.columns.values
 
+def get_date_range(df_price_frame, train_start, train_end, test_start, test_end):
+	train_mask = (df_price_frame.index > train_start) & (df_price_frame.index < train_end) & (df_price_frame["hour"] >= 0) 
+	test_mask = (df_price_frame.index > test_start) & (df_price_frame.index < test_end) & (df_price_frame["hour"] >= 0)
+
+	price_train = df_price_frame.loc[train_mask].dropna()
+	price_test = df_price_frame.loc[test_mask].dropna()
+
+	XX_price_train = price_train.drop('lmp_value', axis=1).reset_index().drop('time', axis=1)
+	XX_price_test = price_test.drop('lmp_value', axis=1).reset_index().drop('time', axis=1)
+
+	YY_price_train = price_train['lmp_value']
+	YY_price_test = price_test['lmp_value']
+
+	return XX_price_train, YY_price_train, XX_price_test, YY_price_test
+
 def main():
 	process_data()
 
