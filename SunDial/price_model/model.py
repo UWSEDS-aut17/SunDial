@@ -15,9 +15,9 @@ from sklearn.metrics import confusion_matrix
 from sklearn.neural_network import MLPRegressor
 
 REGRESSORS = {
-				"SVM_rbf": svm.SVR(kernel='rbf', C=100, gamma=0.001),
-				"Linear": LinearRegression(normalize=True),
-				"KNN": KNeighborsRegressor(n_neighbors=10)
+				"SVM_rbf": svm.SVR(kernel='rbf', C=1000, gamma=0.001),
+				# "Linear": LinearRegression(normalize=True),
+				# "KNN": KNeighborsRegressor(n_neighbors=10)
 			 }
 
 DATA_ITEMS = 25
