@@ -5,37 +5,42 @@ import pandas as pd
 from process_data import process_data
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
+from sklearn.neighbors import KNeighborsRegressor
 from sklearn.metrics import explained_variance_score
 from sklearn.metrics import mean_absolute_error
 from sklearn.metrics import mean_squared_error
 from sklearn.metrics import r2_score
 from sklearn import svm
 from sklearn.metrics import confusion_matrix
+from sklearn.neural_network import MLPRegressor
+
+REGRESSORS = {
+				"SVM_rbf": svm.SVR(kernel='rbf', C=100, gamma=0.001),
+				"Linear": LinearRegression(normalize=True),
+				"KNN": KNeighborsRegressor(n_neighbors=10)
+			 }
+
+DATA_ITEMS = 25
 
 
 def model(X, y):
 	Xtrain, Xtest, ytrain, ytest = train_test_split(X, y)
-	model = svm.SVR(kernel='rbf',C=100,gamma=.001) #LinearRegression(normalize=True)
-	model.fit(Xtrain[:, 1:], ytrain)
-	ypred = model.predict(Xtest[:, 1:])
+	
+	for model_name, model in REGRESSORS.items():
+		print model_name
+		model.fit(Xtrain[:, 1:], ytrain)
+		ypred = model.predict(Xtest[:, 1:])
 
-	variance_score = explained_variance_score(ytest, ypred, multioutput='raw_values')
-	print variance_score
-	mean_squared = mean_squared_error(ytest, ypred)
-	print mean_squared
-	r_squared = r2_score(ytest, ypred, multioutput='raw_values')
-	print r_squared
+		x_vals = Xtest[:, 0][:DATA_ITEMS]
+		y_vals = model.predict(Xtest[:, 1:])[:DATA_ITEMS]
 
-	x_vals = Xtest[:, 0]
-	y_vals = model.predict(Xtest[:, 1:])
+		score = model.score(Xtest[:, 1:], ytest)
+		print score
 
-	print x_vals.shape
-	# x_train
-
-	plt.scatter(x_vals, list(ytest), color='b')
-	plt.scatter(x_vals, y_vals,color='g')
-	plt.show()
-
+		plt.title(model_name)
+		plt.scatter(x_vals, list(ytest)[:DATA_ITEMS], color='b')
+		plt.scatter(x_vals, list(y_vals), color='g')
+		plt.show()
 
 def main():
 	price_data, headers = process_data()
