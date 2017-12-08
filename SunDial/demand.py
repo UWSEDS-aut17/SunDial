@@ -61,7 +61,7 @@ demand_obs = demand_clean.merge(sm_obs, on = "DateTime")
 columns = list(demand_obs.columns.values)
 print(columns)
 
-#%% Model
+#%% Visualize
 
 # Plot to see what it looks like first
 
@@ -82,7 +82,13 @@ for i in range(362):
     demand_daily.append( sum(demand_elec[i*23:(i+1)*23]) )
 
 fig,ax = plt.subplots(figsize = (15, 10))
-ax.plt(demand_daily)
+ax.plot(demand_daily)
+
+#%% Model
+
+# Basic model: Average each hour to get an average hourly power consumption
+
+
 
 # Lasso
 
