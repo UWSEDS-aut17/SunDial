@@ -15,9 +15,9 @@ from sklearn import grid_search
 from sklearn.grid_search import GridSearchCV
 
 REGRESSORS = {
-				"SVM_rbf": svm.SVR(C=1000, gamma=0.001, kernel='rbf', epsilon=10)
+				# "SVM_rbf": svm.SVR(C=1000, gamma=0.001, kernel='rbf', epsilon=10)
 				# "Linear": LinearRegression(normalize=True),
-				# "KNN": KNeighborsRegressor(n_neighbors=10)
+				"KNN": KNeighborsRegressor()
 			 }
 
 DATA_ITEMS = 25
@@ -34,12 +34,13 @@ def model(df_price_frame):
 	x_train, x_test, y_train, y_test = get_train_test_data(df_price_frame)
 	
 	for model_name, model in REGRESSORS.items():
-		svr_reg = model.fit(x_train, y_train)
+		# svr_reg = model.fit(x_train, y_train)
+		n_range = range(1, 10, 1)
+		tuned_parameters = [{"n_neighbors":n_range}]
+		svr_reg = GridSearchCV(model, param_grid=tuned_parameters, verbose=1)
 		y_pred = svr_reg.fit(x_train, y_train).predict(x_test)
 
-		# print 'Optimum parameters epsilon and kernel for SVR: ', svr_reg.best_params_
-
-		print "The test score R2 for SVR: ", svr_reg.score(x_test, y_test)
+		print("The test score R2 for SVR: ", svr_reg.score(x_test, y_test))
 
 		print("SVR mean squared error: %.2f"
 		      % np.mean((y_test - svr_reg.predict(x_test)) ** 2))
