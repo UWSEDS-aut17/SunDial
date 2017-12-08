@@ -90,7 +90,7 @@ def plot_predictions(x_test, y_test, y_pred, model_name, path):
 	plt.plot(x_test.index, y_pred, c='r', label='Predicted')
 	plt.xlabel('data')
 	plt.ylabel('lmp_value')
-	plt.title('model')
+	plt.title(model_name)
 	plt.legend()
 	plt.savefig(os.path.join(path, "{0}_predictions".format(model_name)))
 
@@ -100,7 +100,7 @@ def plot_pred_test_relation(y_test, y_pred, model_name, path):
 	plt.scatter(y_test, y_pred, c='r')
 	plt.xlabel('Observed Elec. Price (MWhr)')
 	plt.ylabel("Predicted Elec. Price (MWWh): $\hat{Y}_i$")
-	plt.title("Energy vs Predicted Energy: $Y_i$ vs $\hat{Y}_i$")
+	plt.title("Energy vs Predicted Energy: $Y_i$ vs $\hat{Y}_i$ " + model_name)
 	plt.savefig(os.path.join(path, "{0}_relation".format(model_name)))
 
 

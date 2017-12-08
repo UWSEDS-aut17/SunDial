@@ -1,4 +1,4 @@
-SAVE_PLOTS=False
+SAVE_PLOTS=True
 SAVE_MODEL = True
 
 # Folders
