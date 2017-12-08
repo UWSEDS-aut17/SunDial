@@ -8,10 +8,9 @@ from sklearn import neighbors
 from sklearn import svm
 from sklearn.model_selection import GridSearchCV
 from utils.file_utils import *
+from utils.settings import *
 import multiprocessing
 
-PRICE_DATA_FILENAME = "../data/sm_price/processed_price.csv"
-PLOTS_FOLDER = "./plots"
 
 def get_train_test_data(df_price_frame):
 	df_price_frame = df_price_frame.dropna()
