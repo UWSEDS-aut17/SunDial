@@ -88,7 +88,10 @@ ax.plot(demand_daily)
 
 # Basic model: Average each hour to get an average hourly power consumption
 
+demand_hourly = [np.NaN]
 
+for i in range(23):
+    demand_hourly.append( np.mean( demand_elec[i:len(demand_elec):23] ) )
 
 # Lasso
 
