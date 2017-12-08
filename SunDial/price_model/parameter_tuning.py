@@ -19,7 +19,7 @@ def get_train_test_data(df_price_frame):
 	Y_price_frame = df_price_frame['lmp_value']
 	return train_test_split(X_price_frame, Y_price_frame, shuffle=False)
 
-def model(df_price_frame):
+def tune_models(df_price_frame):
 	x_train, x_test, y_train, y_test = get_train_test_data(df_price_frame)
 	tune_svr(x_train, y_train, x_test, y_test)
 	tune_knn(x_train, y_train, x_test, y_test)
@@ -108,7 +108,7 @@ def plot_pred_test_relation(y_test, y_pred, model_name, path):
 def main():
 	price_frame = pd.read_csv(PRICE_DATA_FILENAME, index_col=0)
 	df_price_frame = price_frame.set_index("time")
-	model(df_price_frame)
+	tune_models(df_price_frame)
 
 if __name__ == '__main__':
 	main()
