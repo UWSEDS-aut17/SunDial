@@ -75,6 +75,15 @@ sns.jointplot(x = "HLY-DEWP-NORMAL", y = "Electricity:Facility [kW](Hourly)", da
 fig,ax = plt.subplots(figsize = (15, 10))
 ax.plot(demand_obs["Electricity:Facility [kW](Hourly)"])
 
+demand_elec = demand_obs["Electricity:Facility [kW](Hourly)"]
+demand_daily = []
+
+for i in range(362):
+    demand_daily.append( sum(demand_elec[i*23:(i+1)*23]) )
+
+fig,ax = plt.subplots(figsize = (15, 10))
+ax.plt(demand_daily)
+
 # Lasso
 
 #reg = linear_model.Lasso(alpha = 0.1)
