@@ -89,3 +89,22 @@ def bat_cycle(cycles,soc_low,soc_high,rate):
     X4 = poly.fit_transform(X.reshape(1,-1))
     a = regr2.predict(X4)
     return a
+    
+def bat_day(soc,temp,cycles,soc_low,soc_high,rate):
+    """Model the degradation from the battery in one day
+    """
+    #Maybe add some code to check inputs are OK range, etc.
+    DegCycle = bat_cycle(400,soc_low,soc_high,rate)**(cycles/400)
+    DegStore = bat_shelf(soc,temp,60)**(1/60)
+    a = DegCycle*DegStore
+    return a
+    
+def bat_day2(soc,temp,cycles,soc_low,soc_high,rate):
+    """Model the degradation from the battery in one day
+    """
+    #Maybe add some code to check inputs are OK range, etc.
+    DegCycle = bat_cycle(cycles,soc_low,soc_high,rate)
+    DegStore = bat_shelf(soc,temp,60)**(1/60)
+    a = DegCycle*DegStore
+    return (DegCycle, DegStore)
+
