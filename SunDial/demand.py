@@ -7,13 +7,18 @@ This is a temporary script file.
 
 #%% Setup
 
+import numpy as np
 import pandas as pd
 from sklearn import linear_model
 from datetime import datetime
+import matplotlib.pyplot as plt
+import seaborn as sns
+from sklearn.cluster import KMeans
 
-demand_file = "USA_CA_Santa.Maria.Public.AP.723940_TMY3_BASE.csv"
+
+demand_file = "\\Demand\\USA_CA_Santa.Maria.Public.AP.723940_TMY3_BASE.csv"
 weather_obs_file = "1124193.csv"
-weather_obs_path = "\\Weather_Observations\\"
+weather_obs_path = "\\weather_obs\\"
 data_path = "C:\\Users\\cdpha\\Google Drive\\Classes\\CSE 583 Software Development for Data Scientists\\SunDial\\SunDial\\data"
 
 #%% Load Data
@@ -21,7 +26,7 @@ data_path = "C:\\Users\\cdpha\\Google Drive\\Classes\\CSE 583 Software Developme
 with open(data_path + weather_obs_path + weather_obs_file) as f:
     weather_obs = pd.read_csv(f)
 
-with open(data_path + "\\demand\\" + demand_file) as f:
+with open(data_path + demand_file) as f:
     demand = pd.read_csv(f)
 
 #%% Clean and Join Data
@@ -58,11 +63,22 @@ print(columns)
 
 #%% Model
 
+# Plot to see what it looks like first
+
+fig, ax = plt.subplots(figsize = (15, 10))
+
+ax.scatter(demand_obs["HLY-TEMP-NORMAL"], demand_obs["Electricity:Facility [kW](Hourly)"])
+
+sns.jointplot(x = "HLY-TEMP-NORMAL", y = "Electricity:Facility [kW](Hourly)", data = demand_obs, kind = "hex", size = 10)
+sns.jointplot(x = "HLY-DEWP-NORMAL", y = "Electricity:Facility [kW](Hourly)", data = demand_obs, kind = "hex", size = 10)
+
+fig,ax = plt.subplots(figsize = (15, 10))
+ax.plot(demand_obs["Electricity:Facility [kW](Hourly)"])
+
 # Lasso
 
-reg = linear_model.Lasso(alpha = 0.1)
-reg.fit(demand_obs["Electricity:Facility [kW](Hourly)"], demand_obs["HLY-TEMP-NORMAL"])
-
+#reg = linear_model.Lasso(alpha = 0.1)
+#reg.fit(demand_obs["Electricity:Facility [kW](Hourly)"], demand_obs["HLY-TEMP-NORMAL"])
 
 
 
