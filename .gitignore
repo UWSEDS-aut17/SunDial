@@ -6,6 +6,8 @@ __pycache__/
 #MAC files
 .DS_Store
 
+Sundial/data/Energy_Price/
+
 # C extensions
 *.so
 
@@ -97,3 +99,5 @@ ENV/
 #cover
 cover/
 man/
+
+.idea/
