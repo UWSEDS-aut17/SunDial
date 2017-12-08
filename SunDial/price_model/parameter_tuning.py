@@ -21,8 +21,8 @@ def get_train_test_data(df_price_frame):
 
 def model(df_price_frame):
 	x_train, x_test, y_train, y_test = get_train_test_data(df_price_frame)
-	# tune_svr(x_train, y_train, x_test, y_test)
-	# tune_knn(x_train, y_train, x_test, y_test)
+	tune_svr(x_train, y_train, x_test, y_test)
+	tune_knn(x_train, y_train, x_test, y_test)
 	tune_lin_reg(x_train, y_train, x_test, y_test)
 
 def tune_svr(x_train, y_train, x_test, y_test):
