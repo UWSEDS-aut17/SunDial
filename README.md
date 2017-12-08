@@ -8,11 +8,11 @@ With the costs of solar cells and batteries continuing to decline, solar cell-ba
 SunDial is a suite of machine learning models based on weather, utility, and solar cell-battery data to optimize solar battery utilization in a dynamic environment. Our platform will be built to scale for different energy needs, from single family homes to large data centers to county-wide electricity networks. Furthermore, we hope to produce a general economic viablity assessment of solar battery installations in different regions across the United States.
 
 ### Creators
-Ruchi Kwatra
-Vardhman Mehta
-Casey Pham
-Mike Stepanovic
-Ryan Stoddard
+* Ruchi Kwatra
+* Vardhman Mehta
+* Casey Pham
+* Mike Stepanovic
+* Ryan Stoddard
 
 ### Project Organization
 
@@ -68,23 +68,19 @@ SunDial has the following structure:
 
 In the following sections we will examine these elements one by one. First,
 let's consider the core of the project. This is the code inside of
-`shablona/shablona.py`. The code provided in this file is intentionally rather
-simple. It implements some simple curve-fitting to data from a psychophysical
-experiment. It's not too important to know what it does, but if you are really
-interested, you can read all about it
-[here](http://arokem.github.io/2014-08-12-learn-optimization.html).
+`SunDial/SunDial.py`. The code provided in this file _____.
 
 ### Module code
 
-We place the module code in a file called `shablona.py` in directory called
-`shablona`. This structure is a bit confusing at first, but it is a simple way
-to create a structure where when we type `import shablona as sb` in an
+We place the module code in a file called `sundial.py` in directory called
+`sundial`. This structure is a bit confusing at first, but it is a simple way
+to create a structure where when we type `import sundial as sd` in an
 interactive Python session, the classes and functions defined inside of the
-`shablona.py` file are available in the `sb` namespace. For this to work, we
+`sundial.py` file are available in the `sd` namespace. For this to work, we
 need to also create a file in `__init__.py` which contains code that imports
 everything in that file into the namespace of the project:
 
-    from .shablona import *
+    from .sundial import *
 
 In the module code, we follow the convention that all functions are either
 imported from other places, or are defined in lines that precede the lines that
@@ -93,25 +89,16 @@ you see some name, the definition of that name will appear earlier in the file,
 either as a function/variable definition, or as an import from some other module
 or package.
 
-In the case of the shablona module, the main classes defined at the bottom of
+In the case of the sundial module, the main classes defined at the bottom of
 the file make use of some of the functions defined in preceding lines.
 
-Remember that code will be probably be read more times than it will be written.
-Make it easy to read (for others, but also for yourself when you come back to
-it), by following a consistent formatting style. We strongly recommend
-following the
-[PEP8 code formatting standard](https://www.python.org/dev/peps/pep-0008/), and
-we enforce this by running a code-linter called
-[`flake8`](http://flake8.pycqa.org/en/latest/), which automatically checks the
-code and reports any violations of the PEP8 standard (and checks for other
-  general code hygiene issues), see below.
-
 ### Project Data
-
-1. [Google's Project Sunroof](https://www.google.com/get/sunroof#p=0)
-2. [U.S. Daily Climate Normals (Data.gov)](https://catalog.data.gov/dataset/u-s-daily-climate-normals-1981-2010)
-3. [U.S. Energy Price Data (Data.gov)](https://catalog.data.gov/dataset?tags=energy-prices)
-
+* DarkSky API: weather forecasts
+* Center for Advanced Life Cycle Engineering (CALCE): battery cycling
+* National Oceanic and Atmospheric Administration (NOAA): weather observations
+* California Independent System Operator (ISO): renewable energy prices
+* National Renewable Energy Laboratory (NREL): solar output
+* U.S. Department of Energy, Energy Efficiency and Renewable Energy (EEE): energy demand
 
 ### Testing
 
