@@ -121,11 +121,11 @@ def bat_price_per_hour(energy,hour_start,hour_end,day,bat_cap,bat_cost):
     little degradation in each hour by the total cost of the battery.
     Note that for no cycling, there is still a cost due to calander fade.
     Inputs:
-    energy [=] MWhr, total energy taken from battery in day
+    energy [=] kWhr, total energy taken from battery in day
     hour_start [=] 0-24, hour of day to start discharging battery
     hour_end [=] 0-24, hour of day to stop discharging battery
     day [=] 1-365, day of year (to access temperature data for battery model)
-    bat_cap [=] MWhr, total capacity of the battery
+    bat_cap [=] kWhr, total capacity of the battery
     bat_cost [=] $, total cost of the battery
     Outputs:
     cost [=] $, 24x1 vector showing the cost of operating the battery.
@@ -152,8 +152,3 @@ def bat_price_per_hour(energy,hour_start,hour_end,day,bat_cap,bat_cost):
         deg_hour[hour_start:hour_end] = deg_hour[hour_start:hour_end]*deg_cycle_hour
         cost = (-(deg_hour-1) / .4) * bat_cost
     return cost
-        
-        
-    
-
-
