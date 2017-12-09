@@ -5,8 +5,8 @@ import bat_model
 #This example shows how to call battery model to predict degradation price per hour
 #for the next 24 hours given some inputs
 
-"""This function outputs a 24x1 vector with the cost of using the battery for given
-inputs. The basic ideal is to call the degradation model, then multiply the very
+"""The bat_price_per_hour function outputs a 24x1 vector with the cost of using the battery 
+for given inputs. The basic ideal is to call the degradation model, then multiply the very
 little degradation in each hour by the total cost of the battery.
 Note that for no cycling, there is still a cost due to calander fade.
     
@@ -32,7 +32,7 @@ hour_start = 18 #6pm, sun goes down
 hour_end = 22 #10pm, this means battery stops at 10:00pm, not 10:59
 day = 343 #Dec 9th
 bat_cap = 13.5 #kWhr
-bat_cost = 222*bat_cap #cost scales with capacity, adjust to make numbers relavent if needed
+bat_cost = 222*bat_cap # $ - cost scales with capacity, adjust to make relavent if needed
     
 cost_per_hour = bat_model.bat_price_per_hour(energy,hour_start,hour_end,day,bat_cap,bat_cost)
     
