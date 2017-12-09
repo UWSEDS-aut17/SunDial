@@ -30,12 +30,12 @@ regr.fit(X2_train, Y_train)
 # Make predictions using the testing set
 Y_pred = regr.predict(X2_validation)
 # The coefficients
-print('Coefficients: \n', regr.coef_)
+#print('Coefficients: \n', regr.coef_)
 # The mean squared error
-print("Mean squared error: %.2f"
-      % mean_squared_error(Y_validation, Y_pred))
+#print("Mean squared error: %.2f"
+#      % mean_squared_error(Y_validation, Y_pred))
 # Explained variance score: 1 is perfect prediction
-print('Variance score: %.2f' % r2_score(Y_validation, Y_pred))
+#print('Variance score: %.2f' % r2_score(Y_validation, Y_pred))
 
 #now train model for degradation from cycling
 #add test to check for csv
@@ -56,12 +56,12 @@ regr2.fit(X2_train, Y_train)
 # Make predictions using the testing set
 Y_pred = regr2.predict(X2_validation)
 # The coefficients
-print('Coefficients: \n', regr.coef_)
+#print('Coefficients: \n', regr.coef_)
 # The mean squared error
-print("Mean squared error: %.2f"
-      % mean_squared_error(Y_validation, Y_pred))
+#print("Mean squared error: %.2f"
+#      % mean_squared_error(Y_validation, Y_pred))
 # Explained variance score: 1 is perfect prediction
-print('Variance score: %.2f' % r2_score(Y_validation, Y_pred))
+#print('Variance score: %.2f' % r2_score(Y_validation, Y_pred))
 
 #load temperature data to input into battery model
 df = pd.read_csv('../data/SM_forecast_2016.csv')
@@ -116,15 +116,14 @@ def bat_day2(soc,temp,cycles,soc_low,soc_high,rate):
     return (DegCycle, DegStore)
     
 def bat_price_per_hour(energy,hour_start,hour_end,day,bat_cap,bat_cost):
-    """
-    This function outputs a 24x1 vector with the cost of using the battery for given
+    """This function outputs a 24x1 vector with the cost of using the battery for given
     inputs. The basic ideal is to call the degradation model, then multiply the very
     little degradation in each hour by the total cost of the battery.
     Note that for no cycling, there is still a cost due to calander fade.
     Inputs:
     energy [=] MWhr, total energy taken from battery in day
-    hour_start [=] 0-23, hour of day to start discharging battery
-    hour_end [=] 0-23, hour of day to stop discharging battery
+    hour_start [=] 0-24, hour of day to start discharging battery
+    hour_end [=] 0-24, hour of day to stop discharging battery
     day [=] 1-365, day of year (to access temperature data for battery model)
     bat_cap [=] MWhr, total capacity of the battery
     bat_cost [=] $, total cost of the battery
@@ -135,19 +134,19 @@ def bat_price_per_hour(energy,hour_start,hour_end,day,bat_cap,bat_cost):
     hours = hour_end - hour_start
     temp = daily_temp[day-1]
     if cycles == 0:
-        soc = 0
+        soc = 50
         deg_store = bat_shelf(soc,temp,60)**(1/60)
         deg_store_hour = deg_store**(1/24)
         cost_per_hour = (-(deg_store_hour-1) / .4) * bat_cost
         cost = np.full((24, 1), cost_per_hour)
     else:
-        soc = 0
-        soc_low = soc
-        soc_high = min(max(cycles*100,60),100)
+        soc = 50
+        soc_high = 100
+        soc_low = min(max((soc_high - cycles*100),0),40)        
         rate = min(max(cycles/hours,0.5),2)
         deg_store = bat_shelf(soc,temp,60)**(1/60)
         deg_store_hour = deg_store**(1/24)
-        deg_cycle = bat_cycle(cycles,soc_low,soc_high,rate)
+        deg_cycle = bat_cycle(400,soc_low,soc_high,rate)**(cycles/400)
         deg_cycle_hour = deg_cycle**(1/hours)
         deg_hour = np.full((24,1), deg_store_hour)
         deg_hour[hour_start:hour_end] = deg_hour[hour_start:hour_end]*deg_cycle_hour
