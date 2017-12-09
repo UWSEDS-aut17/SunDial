@@ -63,6 +63,13 @@ print("Mean squared error: %.2f"
 # Explained variance score: 1 is perfect prediction
 print('Variance score: %.2f' % r2_score(Y_validation, Y_pred))
 
+#load temperature data to input into battery model
+df = pd.read_csv('../data/SM_forecast_2016.csv')
+df['temperature'] = (df['temperature'] - 32)*(5/9)
+daily_temp = []
+for ii in range(365):
+    daily_temp.append(df.loc[ii*24:ii*24+24,'temperature'].mean(axis=0))
+
 
 def bat_shelf(soc,temp,days):
     """Model the degradation from the battery sitting there (not from cycling). inputs 
@@ -107,4 +114,47 @@ def bat_day2(soc,temp,cycles,soc_low,soc_high,rate):
     DegStore = bat_shelf(soc,temp,60)**(1/60)
     a = DegCycle*DegStore
     return (DegCycle, DegStore)
+    
+def bat_price_per_hour(energy,hour_start,hour_end,day,bat_cap,bat_cost):
+    """
+    This function outputs a 24x1 vector with the cost of using the battery for given
+    inputs. The basic ideal is to call the degradation model, then multiply the very
+    little degradation in each hour by the total cost of the battery.
+    Note that for no cycling, there is still a cost due to calander fade.
+    Inputs:
+    energy [=] MWhr, total energy taken from battery in day
+    hour_start [=] 0-23, hour of day to start discharging battery
+    hour_end [=] 0-23, hour of day to stop discharging battery
+    day [=] 1-365, day of year (to access temperature data for battery model)
+    bat_cap [=] MWhr, total capacity of the battery
+    bat_cost [=] $, total cost of the battery
+    Outputs:
+    cost [=] $, 24x1 vector showing the cost of operating the battery.
+    """
+    cycles = energy / bat_cap
+    hours = hour_end - hour_start
+    temp = daily_temp[day-1]
+    if cycles == 0:
+        soc = 0
+        deg_store = bat_shelf(soc,temp,60)**(1/60)
+        deg_store_hour = deg_store**(1/24)
+        cost_per_hour = (-(deg_store_hour-1) / .4) * bat_cost
+        cost = np.full((24, 1), cost_per_hour)
+    else:
+        soc = 0
+        soc_low = soc
+        soc_high = min(max(cycles*100,60),100)
+        rate = min(max(cycles/hours,0.5),2)
+        deg_store = bat_shelf(soc,temp,60)**(1/60)
+        deg_store_hour = deg_store**(1/24)
+        deg_cycle = bat_cycle(cycles,soc_low,soc_high,rate)
+        deg_cycle_hour = deg_cycle**(1/hours)
+        deg_hour = np.full((24,1), deg_store_hour)
+        deg_hour[hour_start:hour_end] = deg_hour[hour_start:hour_end]*deg_cycle_hour
+        cost = (-(deg_hour-1) / .4) * bat_cost
+    return cost
+        
+        
+    
+
 
