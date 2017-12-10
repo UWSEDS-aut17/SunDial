@@ -7,8 +7,8 @@ from sklearn import linear_model
 from sklearn import neighbors
 from sklearn import svm
 from sklearn.model_selection import GridSearchCV
-from SunDial.price_model.utils.file_utils import *
-from SunDial.price_model.utils.settings import *
+from sundial.price_model.utils.file_utils import *
+from sundial.price_model.utils.settings import *
 import multiprocessing
 
 

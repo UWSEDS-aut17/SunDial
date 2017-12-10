@@ -5,10 +5,10 @@ from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
 from sklearn.neighbors import KNeighborsRegressor
 from sklearn import svm
-from SunDial.price_model.utils.file_utils import *
-from SunDial.price_model.utils.settings import *
-from SunDial.price_model.parameter_tuning import plot_pred_test_relation
-from SunDial.price_model.parameter_tuning import plot_predictions
+from sundial.price_model.utils.file_utils import *
+from sundial.price_model.utils.settings import *
+from sundial.price_model.parameter_tuning import plot_pred_test_relation
+from sundial.price_model.parameter_tuning import plot_predictions
 
 
 REGRESSORS = {

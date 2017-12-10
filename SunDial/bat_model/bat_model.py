@@ -11,7 +11,7 @@ from sklearn.preprocessing import PolynomialFeatures
 #Train 2 models upon import, storage and cycle
 #First, train storage model (battery degradation from simply sitting, not from cycling
 #need to add test to check presence of these csv files
-dataset = pd.read_csv('./data/bat_shelf.csv')
+dataset = pd.read_csv('sundial/data/bat_shelf.csv')
 dataset[dataset['Cap'] > 1] = 1
 dataset = dataset[dataset.Cap != 0]
 #Try with adding polynomial features
@@ -39,7 +39,7 @@ Y_pred = regr.predict(X2_validation)
 
 #now train model for degradation from cycling
 #add test to check for csv
-dataset = pd.read_csv('./data/bat_cycle.csv')
+dataset = pd.read_csv('sundial/data/bat_cycle.csv')
 #Try with adding polynomial features
 array = dataset.values
 X = array[:,[1,3,4,5]]
@@ -64,7 +64,7 @@ Y_pred = regr2.predict(X2_validation)
 #print('Variance score: %.2f' % r2_score(Y_validation, Y_pred))
 
 #load temperature data to input into battery model
-df = pd.read_csv('./data/SM_forecast_2016.csv')
+df = pd.read_csv('sundial/data/SM_forecast_2016.csv')
 df['temperature'] = (df['temperature'] - 32)*(5/9)
 daily_temp = []
 for ii in range(365):
@@ -72,9 +72,9 @@ for ii in range(365):
 
 
 def bat_shelf(soc,temp,days):
-    """Model the degradation from the battery sitting there (not from cycling). inputs 
-    are state of charge (soc,%, 0 - 100) which is the state of charge while resting, 
-    temperature (temp, C, -40 - 50 C), and days (length of time for case, trained up to 
+    """Model the degradation from the battery sitting there (not from cycling). inputs
+    are state of charge (soc,%, 0 - 100) which is the state of charge while resting,
+    temperature (temp, C, -40 - 50 C), and days (length of time for case, trained up to
     150 days, but we will use 30 days then extrapolate degradation to adjust for daily calls)
     """
     #Maybe add some code to check inputs are OK range, etc.
@@ -86,8 +86,8 @@ def bat_shelf(soc,temp,days):
 
 def bat_cycle(cycles,soc_low,soc_high,rate):
     """Model the degradation from the battery due to cycles. inputs are cycle # (1-800),
-    lower limit state of charge of cycle (soc,%, 0 - 40) which is the state of charge prior to charging, 
-    upper limit state of charge of cycle (soc,%, 60 - 100) which is the state of charge prior 
+    lower limit state of charge of cycle (soc,%, 0 - 40) which is the state of charge prior to charging,
+    upper limit state of charge of cycle (soc,%, 60 - 100) which is the state of charge prior
     to discharging, and the discharging rate (0.5C - 2C)
     """
     #Maybe add some code to check inputs are OK range, etc.
@@ -96,7 +96,7 @@ def bat_cycle(cycles,soc_low,soc_high,rate):
     X4 = poly.fit_transform(X.reshape(1,-1))
     a = regr2.predict(X4)
     return a
-    
+
 def bat_day(soc,temp,cycles,soc_low,soc_high,rate):
     """Model the degradation from the battery in one day
     """
@@ -105,7 +105,7 @@ def bat_day(soc,temp,cycles,soc_low,soc_high,rate):
     DegStore = bat_shelf(soc,temp,60)**(1/60)
     a = DegCycle*DegStore
     return a
-    
+
 def bat_day2(soc,temp,cycles,soc_low,soc_high,rate):
     """Model the degradation from the battery in one day
     """
@@ -114,7 +114,7 @@ def bat_day2(soc,temp,cycles,soc_low,soc_high,rate):
     DegStore = bat_shelf(soc,temp,60)**(1/60)
     a = DegCycle*DegStore
     return (DegCycle, DegStore)
-    
+
 def bat_price_per_hour(energy,hour_start,hour_end,day,bat_cap,bat_cost):
     """This function outputs a 24x1 vector with the cost of using the battery for given
     inputs. The basic ideal is to call the degradation model, then multiply the very
@@ -142,7 +142,7 @@ def bat_price_per_hour(energy,hour_start,hour_end,day,bat_cap,bat_cost):
     else:
         soc = 50
         soc_high = 100
-        soc_low = min(max((soc_high - cycles*100),0),40)        
+        soc_low = min(max((soc_high - cycles*100),0),40)
         rate = min(max(cycles/hours,0.5),2)
         deg_store = bat_shelf(soc,temp,60)**(1/60)
         deg_store_hour = deg_store**(1/24)
