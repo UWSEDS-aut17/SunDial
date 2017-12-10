@@ -7,8 +7,8 @@ from sklearn import linear_model
 from sklearn import neighbors
 from sklearn import svm
 from sklearn.model_selection import GridSearchCV
-from utils.file_utils import *
-from utils.settings import *
+from SunDial.price_model.utils.file_utils import *
+from SunDial.price_model.utils.settings import *
 import multiprocessing
 
 
@@ -34,7 +34,7 @@ def tune_svr(x_train, y_train, x_test, y_test):
 						   n_jobs=multiprocessing.cpu_count())
 	y_pred = svr_reg.fit(x_train, y_train).predict(x_test)
 
-	print 'Optimum parameters epsilon and kernel for SVR: ', svr_reg.best_params_
+	print('Optimum parameters epsilon and kernel for SVR: ', svr_reg.best_params)
 
 	print("The test score R2 for SVR: ", svr_reg.score(x_test, y_test))
 
@@ -56,7 +56,7 @@ def tune_knn(x_train, y_train, x_test, y_test):
 						   n_jobs=multiprocessing.cpu_count())
 	y_pred = knn_reg.fit(x_train, y_train).predict(x_test)
 
-	print 'Optimum parameters epsilon and kernel for KNN: ', knn_reg.best_params_
+	print('Optimum parameters epsilon and kernel for KNN: ', knn_reg.best_params_)
 
 	print("The test score R2 for KNN: ", knn_reg.score(x_test, y_test))
 

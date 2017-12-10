@@ -5,10 +5,10 @@ from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
 from sklearn.neighbors import KNeighborsRegressor
 from sklearn import svm
-from utils.file_utils import *
-from parameter_tuning import plot_pred_test_relation
-from parameter_tuning import plot_predictions
-from utils.settings import *
+from SunDial.price_model.utils.file_utils import *
+from SunDial.price_model.utils.settings import *
+from SunDial.price_model.parameter_tuning import plot_pred_test_relation
+from SunDial.price_model.parameter_tuning import plot_predictions
 
 
 REGRESSORS = {
@@ -32,7 +32,7 @@ class EnergyPriceModel():
 
 	def train_models(self):
 		if not self.train:
-			print "Initialize with train"
+			print("Initialize with train")
 			return
 
 		x_train, x_test, y_train, y_test = self.get_train_test_data()
@@ -40,8 +40,8 @@ class EnergyPriceModel():
 		for model_name, model in REGRESSORS.items():
 			reg_model = model.fit(x_train, y_train)
 			y_pred = reg_model.predict(x_test)
-			print "The test score R2 for {0}: {1}".format(model_name, reg_model.score(x_test, y_test))
-			print "{0} mean squared error: {1}".format(model_name, np.mean((y_test - reg_model.predict(x_test)) ** 2))
+			print("The test score R2 for {0}: {1}".format(model_name, reg_model.score(x_test, y_test)))
+			print("{0} mean squared error: {1}".format(model_name, np.mean((y_test - reg_model.predict(x_test)) ** 2)))
 
 			if SAVE_PLOTS:
 				target_folder = os.path.join(PLOTS_FOLDER, "final_plots")
@@ -70,7 +70,7 @@ class EnergyPriceModel():
 def main():
 	epm = EnergyPriceModel(train=True)
 	# epm.train_models()
-	# print epm.test_model("2016-01-01 07:00:00", "SVM_rbf")
+	# print(epm.test_model("2016-01-01 07:00:00", "SVM_rbf"))
 
 if __name__ == '__main__':
 	main()

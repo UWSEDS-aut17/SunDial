@@ -6,7 +6,7 @@ def optimize_solar(dt):
   """
   
   from sundial import models
-  
+
   pv_hourly = models.pv_model(dt)
   pr_hourly = models.pr_model(dt)
   dm_hourly = models.dm_model(dt)
@@ -24,4 +24,4 @@ def optimize_viz(df):
   
   import matplotlib.pyplot as plt
   
-  fig = 
+  fig =

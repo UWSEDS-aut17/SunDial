@@ -11,7 +11,7 @@ from sklearn.preprocessing import PolynomialFeatures
 #Train 2 models upon import, storage and cycle
 #First, train storage model (battery degradation from simply sitting, not from cycling
 #need to add test to check presence of these csv files
-dataset = pd.read_csv('data/bat_shelf.csv')
+dataset = pd.read_csv('../data/bat_shelf.csv')
 dataset[dataset['Cap'] > 1] = 1
 dataset = dataset[dataset.Cap != 0]
 #Try with adding polynomial features
@@ -39,7 +39,7 @@ Y_pred = regr.predict(X2_validation)
 
 #now train model for degradation from cycling
 #add test to check for csv
-dataset = pd.read_csv('data/bat_cycle.csv')
+dataset = pd.read_csv('../data/bat_cycle.csv')
 #Try with adding polynomial features
 array = dataset.values
 X = array[:,[1,3,4,5]]
