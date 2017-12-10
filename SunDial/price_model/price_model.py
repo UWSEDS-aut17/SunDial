@@ -56,9 +56,10 @@ class EnergyPriceModel():
 	def test_model(self, test_date, model_name):
 		load_path = os.path.join(MODEL_FOLDER, "{0}.model".format(model_name))
 		reg_model = self.load_model(load_path)
-		feature_vec = self.df_price_frame.loc[test_date].drop('lmp_value').values
-		test_point = feature_vec.reshape(1, -1)
-		return reg_model.predict(test_point)[0]
+		begin = test_date + ' 00:00:00'
+		end = test_date + ' 23:00:00'
+		feature_vec = self.df_price_frame.loc[begin:end].drop('lmp_value', axis=1).values
+		return reg_model.predict(feature_vec)
 
 	def save_model(self, reg_model, path):
 		joblib.dump(reg_model, path)
@@ -70,7 +71,7 @@ class EnergyPriceModel():
 def main():
 	epm = EnergyPriceModel(train=True)
 	# epm.train_models()
-	# print(epm.test_model("2016-01-01 07:00:00", "SVM_rbf"))
+	print(epm.test_model("2016-01-02", "SVM_rbf"))
 
 if __name__ == '__main__':
 	main()

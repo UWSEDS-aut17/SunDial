@@ -1,5 +1,6 @@
 from SunDial.bat_model import bat_model
 from SunDial.price_model import price_model
+import numpy as np
 
 #This example shows how to call battery model to predict degradation price per hour
 #for the next 24 hours given some inputs
@@ -34,8 +35,8 @@ bat_cap = 13.5 #kWhr
 bat_cost = 222*bat_cap # $ - cost scales with capacity, adjust to make relavent if needed
     
 cost_per_hour = bat_model.bat_price_per_hour(energy,hour_start,hour_end,day,bat_cap,bat_cost)
+cost_per_hour = np.squeeze(cost_per_hour)
 print(cost_per_hour)
-
 
 
 """
@@ -43,4 +44,5 @@ Price model usage
 provide date and model name from ["SVM_rbf", "KNN", "Linear"]
 """
 epm = price_model.EnergyPriceModel()
-print(epm.test_model("2016-01-01 07:00:00", "SVM_rbf"))
+price_per_hour = epm.test_model("2016-12-08", "SVM_rbf")
+print(price_per_hour)
