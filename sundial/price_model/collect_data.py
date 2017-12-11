@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 
 
 DATA_FOLDER = "../data/Energy_Price"
-RESULT_FILENAME = "./price_time.csv"
+RESULT_FILENAME = "../data/sm_price/price_time.csv"
 
 
 def load_xml(data_file):
