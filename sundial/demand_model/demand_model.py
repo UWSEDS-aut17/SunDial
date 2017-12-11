@@ -10,11 +10,9 @@ This is a temporary script file.
 def get_demand_cph():
     import numpy as np
     import pandas as pd
-    from sklearn import linear_model
     from datetime import datetime
     import matplotlib.pyplot as plt
     import seaborn as sns
-    from sklearn.cluster import KMeans
 
 
     demand_file = "/demand/USA_CA_Santa.Maria.Public.AP.723940_TMY3_BASE.csv"
@@ -31,8 +29,6 @@ def get_demand_cph():
         demand = pd.read_csv(f)
 
     #%% Clean and Join Data
-
-    #salem_obs = [obs for obs in weather_obs if obs.NAME == "SALEM MCNARY FIELD, OR US"]
 
     sm_obs = weather_obs[weather_obs.NAME == "SANTA MARIA PUBLIC AIRPORT, CA US"]
 
@@ -58,9 +54,6 @@ def get_demand_cph():
     # Merge weather obs and demand data
 
     demand_obs = demand_clean.merge(sm_obs, on = "DateTime")
-
-    columns = list(demand_obs.columns.values)
-    print(columns)
 
     #%% Visualize
 
@@ -95,8 +88,3 @@ def get_demand_cph():
         demand_hourly.append( np.mean( demand_elec[i:len(demand_elec):23] ) )
 
     return demand_hourly
-
-    # Lasso
-
-    #reg = linear_model.Lasso(alpha = 0.1)
-    #reg.fit(demand_obs["Electricity:Facility [kW](Hourly)"], demand_obs["HLY-TEMP-NORMAL"])
