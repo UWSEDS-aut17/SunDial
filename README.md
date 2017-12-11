@@ -1,4 +1,3 @@
-## SunDial
 ![alt text](img/intro_pic.jpg)
 
 With the costs of solar cells and batteries continuing to decline, solar cell-battery combination systems have become viable options to save on electricity costs while offseting carbon emissions. However, electricity demand, ulility costs, and sunlight avaliability all change dynamically, making it difficult for consumers to optimize their utilization of renewable energy sources.
