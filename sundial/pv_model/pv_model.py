@@ -28,7 +28,7 @@ tilt = 0.261799             # Panel tilt
 azi = 3.14159               # Azimuth Angle
 eff = 0.15                  # Efficiency of the panel
 
-saved_model = 'sundial/pv_model/finalized_model.pkl'
+# saved_model = 'finalized_model.pkl'
 
 # cleaning and formatting the weather data
 
@@ -168,9 +168,18 @@ def save_model(saved_model):
 
 
 def load_model(saved_model, year, month, day):
+    y_pred = []
     x_train, y_train, x_test, y_test = get_data_split(year, month, day)
     loaded_model = joblib.load(saved_model)
-    y_pred = loaded_model.predict(x_test)
+    y_pred_test = loaded_model.predict(x_test)
+
+    for i in range(len(y_pred_test)):
+        if i <= 7 or i > 17:
+            comp = 0
+        else:
+            comp = y_pred_test[i]
+        y_pred.append(comp)
+    y_pred = np.array(y_pred)
 
     return(y_pred)
 
@@ -196,10 +205,9 @@ def plot(saved_model, year, month, day):
 def pv_output_cph(saved_model, year, month, day):
 
     y_pred = load_model(saved_model, year, month, day)
-
     # print(y_pred)
     return (y_pred)
 
 
 # example running code :
-# pv_output_cph('sundial/pv_model/finalized_model.pkl',2016,12,15)
+# pv_output_cph('sundial/pv_model/finalized_model.pkl', 2016, 12, 15)
