@@ -27,9 +27,9 @@ tilt = 0.261799             # Panel tilt
 azi = 3.14159               # Azimuth Angle
 eff = 0.15                  # Efficiency of the panel
 
-year3 = 2016    # int(sys.argv[1])
-month3 = 2      # int(sys.argv[2])
-day3 = 7        # int(sys.argv[3])
+year3 = int(sys.argv[1])
+month3 = int(sys.argv[2])
+day3 = int(sys.argv[3])
 
 # cleaning and formatting the weather data
 
