@@ -14,8 +14,8 @@ from sklearn.grid_search import GridSearchCV
 seaborn.set()
 
 # fetching the data
-data = pd.read_csv('../data/SM_forecast_2016.csv', delimiter=',')
-solar = np.loadtxt('../data/solar_data_SM_2016.csv', delimiter=',' , skiprows=1)
+data = pd.read_csv('sundial/data/SM_forecast_2016.csv', delimiter=',')
+solar = np.loadtxt('sundial/data/solar_data_SM_2016.csv', delimiter=',' , skiprows=1)
 
 # Declaring the constants
 
@@ -176,14 +176,14 @@ def plot():
     plt.title('pv_output')
     plt.savefig('pv_output.png')
     plt.show(block=True)
-    print(y_pred) 
+    #print(y_pred) 
     return(y_pred)
     
 def pv_output_cph():
     
     y_pred = choose_regressor()
     
-    print(y_pred)
+    #print(y_pred)
     return (y_pred)
 
 
