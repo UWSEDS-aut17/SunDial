@@ -123,28 +123,109 @@ app.css.append_css({
 
 app.layout = html.Div(children=[
     html.H1(children='SunDial - solar energy cost optimization analysis'),
+
     html.Div(children=[
-        html.H2("Date"),
-        dcc.DatePickerSingle(id="date-picker", date=dt(2016, 1, 5))
-    ]),
-    html.Button('Sumbit', id="submit-button"),
-    dcc.Graph(id='model-graphs'),
+        html.Div(children=[
+            html.P("SunDial is a suite of machine learning models based on weather, utility, and solar "
+                   "cell-battery data to optimize solar battery utilization in a dynamic environment. Our "
+                   "platform will be built to scale for different energy needs, from single family homes "
+                   "to large data centers to county-wide electricity networks. Furthermore, we hope to "
+                   "produce a general economic viablity assessment of solar battery installations in different "
+                   "regions across the United States.")
+        ], className='col'),
+    ], className='row'),
 
 
-    dcc.Graph(id='optimizer-graph')
-])
+    html.Div(children=[
+        html.Div(children=[
+            html.P("Scenario A: ... "),
+            html.P("Scenario B: ... "),
+            html.P("Scenario C: ... ")
+        ], className='col'),
+    ], className='row'),
+
+    html.Div(children=[
+        html.Div(children=[
+            html.P("Date")
+        ], className='col'),
+        html.Div(children=[
+            html.P("Time Interval Start")
+        ], className='col'),
+        html.Div(children=[
+            html.P("Time Interval End")
+        ], className='col'),
+        html.Div(children=[
+            html.P("Rate (%)")
+        ], className='col'),
+        html.Div(children=[
+            html.P("Cost Threshhold ($)")
+        ], className='col')
+    ], className='row'),
+
+    html.Div(children=[
+        html.Div(children=[
+            dcc.DatePickerSingle(id="date-picker", date=dt(2016, 12, 8)),
+        ], className='col'),
+        html.Div(children=[
+            dcc.Input(
+                id='t_start',
+                placeholder='t_start',
+                type='number',
+                value='18'
+            ),
+        ], className='col'),
+        html.Div(children=[
+            dcc.Input(
+                id='t_end',
+                placeholder='t_end',
+                type='number',
+                value='22'
+            ),
+        ], className='col'),
+        html.Div(children=[
+            dcc.Input(
+                id='rate',
+                placeholder='rate',
+                type='number',
+                value='0.1'
+            ),
+        ], className='col'),
+        html.Div(children=[
+            dcc.Input(
+                id='cost_thresh',
+                placeholder='cost theshold',
+                type='number',
+                value='40'
+            ),
+        ], className='col')
+    ], className='row'),
+
+    html.Div(children=[
+        html.Div(children=[
+            html.Button('Submit', id="final-submit-button", className="btn btn-primary btn-lg"),
+        ], className='col', style={'text-align': 'center'})
+    ], className='row'),
+
+    html.Div(children=[
+        html.Div(children=[
+            dcc.Graph(id='model-graphs'),
+        ], className='col', style={'text-align': 'center'}),
+        html.Div(children=[
+            dcc.Graph(id='optimizer-graph')
+        ], className='col', style={'text-align': 'center'}),
+    ], className='row'),
+], className='container', style={'margin-top': 25})
 
 @app.callback(
     Output('model-graphs', 'figure'),
-    [Input('submit-button', 'n_clicks')],
+    [Input('final-submit-button', 'n_clicks')],
     [State('date-picker', 'date')]
 )
 def update_model_div(_, input_date):
     model_output_df = get_model_df(input_date)
     x = [i for i in range(24)]
 
-    fig = tools.make_subplots(rows=4, cols=1, vertical_spacing=0.2)
-    print(fig)
+    fig = tools.make_subplots(rows=4, cols=1, vertical_spacing=0.1)
     for i, column_name in enumerate(model_output_df.columns.values):
         trace = go.Scatter(
             x=x,
@@ -152,26 +233,32 @@ def update_model_div(_, input_date):
             mode="lines+markers",
             name=column_name,
             marker={
-                'size': 10,
+                'size': 6,
                 'line': {'width': 0.5, 'color': 'white'}
-            }
+            },
         )
         fig.append_trace(trace, i + 1, 1)
-    fig['layout'].update(height=800, title='models')
+
+    fig['layout'].update(yaxis1={'title': 'Cost per Hour'}, yaxis2={'title': 'Cost per Hour'}, yaxis3={'title': 'KWhr'}, yaxis4={'title': 'KWhr'})
+    fig['layout'].update(height=650, width=500, title='Analysis Models')
     return fig
 
 
 @app.callback(
     Output('optimizer-graph', 'figure'),
-    [Input('submit-button', 'n_clicks')],
-    [State('date-picker', 'date')]
+    [Input('final-submit-button', 'n_clicks')],
+    [State('date-picker', 'date'),
+     State('t_start', 'value'),
+     State('t_end', 'value'),
+     State('rate', 'value'),
+     State('cost_thresh', 'value'),]
 )
-def update_optimizer_div(_, input_date):
+def update_optimizer_div(_, input_date, t_start, t_end, rate, cost_thresh):
     model_output_df = get_model_df(input_date)
     valid_date = parser.parse(input_date)
     scenario_df = pd.DataFrame({"Scenario_A": get_scenario_a(model_output_df, valid_date),
-                                "Scenario_B": get_scenario_b(model_output_df, valid_date, 18, 22, 0.1),
-                                "Scenario_C": get_scenario_c(model_output_df, valid_date, 18, 22, 0.1, 40)})
+                                "Scenario_B": get_scenario_b(model_output_df, valid_date, int(t_start), int(t_end), float(rate)),
+                                "Scenario_C": get_scenario_c(model_output_df, valid_date, int(t_start), int(t_end), float(rate), int(cost_thresh))})
 
     x = [i for i in range(24)]
     traces = []
@@ -182,7 +269,7 @@ def update_optimizer_div(_, input_date):
             mode="lines+markers",
             name=column_name,
             marker={
-                'size': 10,
+                'size': 6,
                 'line': {'width': 0.5, 'color': 'white'}
             }
         ))
@@ -192,8 +279,8 @@ def update_optimizer_div(_, input_date):
             xaxis={'title': 'Hour'},
             yaxis={'title': 'Cost'},
             title="Cost Analysis",
-            width=800,
-            height=800
+            height=650,
+            width=500
         )
     }
 
