@@ -137,9 +137,9 @@ app.layout = html.Div(children=[
 
     html.Div(children=[
         html.Div(children=[
-            html.P("Scenario A: ... "),
-            html.P("Scenario B: ... "),
-            html.P("Scenario C: ... ")
+            html.P("Scenario A: Don't use battery, use PV to offset demand "),
+            html.P("Scenario B: Discharge battery in specified hour range at specified rate "),
+            html.P("Scenario C: Discharge battery at specified rate when cost exceeds specified thresh ")
         ], className='col'),
     ], className='row'),
 
@@ -278,7 +278,7 @@ def update_optimizer_div(_, input_date, t_start, t_end, rate, cost_thresh):
         'data': traces,
         'layout': go.Layout(
             xaxis={'title': 'Hour'},
-            yaxis={'title': 'Cost'},
+            yaxis={'title': 'Cumulative Cost [$]'},
             title="Cost Analysis",
             height=650,
             width=500
