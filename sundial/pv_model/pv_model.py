@@ -12,6 +12,7 @@ from sklearn.linear_model import LinearRegression
 from sklearn import linear_model
 from sklearn.metrics import mean_squared_error, r2_score
 from sklearn.grid_search import GridSearchCV
+from sklearn.externals import joblib
 seaborn.set()
 
 # fetching the data
@@ -27,9 +28,7 @@ tilt = 0.261799             # Panel tilt
 azi = 3.14159               # Azimuth Angle
 eff = 0.15                  # Efficiency of the panel
 
-year3 = int(sys.argv[1])
-month3 = int(sys.argv[2])
-day3 = int(sys.argv[3])
+saved_model = 'sundial/pv_model/finalized_model.pkl'
 
 # cleaning and formatting the weather data
 
@@ -113,12 +112,12 @@ def get_data_split(year3, month3, day3):
 
     pv_output_array = get_data(solar)
 
-    year1 = pv_output_array[0, 2]
-    month1 = pv_output_array[0, 3]
-    day1 = pv_output_array[0, 4]
+    year1 = 2016
+    month1 = 1
+    day1 = 1
 
-    year2 = pv_output_array[0, 2]
-    month2 = month3-1
+    year2 = 2016
+    month2 = 11
     day2 = 30
 
     year4 = year3
@@ -146,7 +145,7 @@ def get_data_split(year3, month3, day3):
     return (x_train, y_train, x_test, y_test)
 
 
-def SVM_regressor():
+def SVM_regressor(year3, month3, day3):
     x_train, y_train, x_test, y_test = get_data_split(year3, month3, day3)
 
     gamma_range = [0.01, 0.001, 0.0001, 0.00001]
@@ -158,44 +157,28 @@ def SVM_regressor():
     svr_rbf = GridSearchCV(SVR(), param_grid=tuned_parameters, verbose=0)
     y_svr = svr_rbf.fit(x_train, y_train).predict(x_test)
 
-    return(y_svr)
+    return(svr_rbf)
 
 
-def KNN_regressor():
-    x_train, y_train, x_test, y_test = get_data_split(year3, month3, day3)
+def save_model(saved_model):
+    svr_rbf_test = SVM_regressor(2016, 12, 1)
+    joblib.dump(svr_rbf_test, saved_model)
 
-    n_neighbors = x_train.shape[1]
-    for i, weights in enumerate(['uniform', 'distance']):
-        knn = neighbors.KNeighborsRegressor(n_neighbors, weights=weights)
-
-        y_knn = knn.fit(x_train, y_train).predict(x_test)
-    return(y_knn)
-
-# choosing the best regressor
+    return(svr_rbf_test, saved_model)
 
 
-def choose_regressor():
-
-    x_train, y_train, x_test, y_test = get_data_split(year3, month3, day3)
-
-    y_svr = SVM_regressor()
-    y_knn = KNN_regressor()
-
-    y_pred = np.empty(shape=(y_test.shape[0], 1))
-
-    if (mean_squared_error(y_test, y_svr)) > mean_squared_error(y_test, y_knn):
-        y_pred = y_svr
-
-    else:
-        y_pred = y_knn
+def load_model(saved_model, year, month, day):
+    x_train, y_train, x_test, y_test = get_data_split(year, month, day)
+    loaded_model = joblib.load(saved_model)
+    y_pred = loaded_model.predict(x_test)
 
     return(y_pred)
 
 
-def plot():
+def plot(saved_model, year, month, day):
 
-    y_pred = choose_regressor()
-    x_train, y_train, x_test, y_test = get_data_split(year3, month3, day3)
+    y_pred = load_model(saved_model, year, month, day)
+    x_train, y_train, x_test, y_test = get_data_split(year, month, day)
     x = range(x_test.shape[0])
 
     plt.plot(x, y_pred, label='predicted')
@@ -210,9 +193,13 @@ def plot():
     return(y_pred)
 
 
-def pv_output_cph():
+def pv_output_cph(saved_model, year, month, day):
 
-    y_pred = choose_regressor()
+    y_pred = load_model(saved_model, year, month, day)
 
     # print(y_pred)
     return (y_pred)
+
+
+# example running code :
+# pv_output_cph('sundial/pv_model/finalized_model.pkl',2016,12,15)
