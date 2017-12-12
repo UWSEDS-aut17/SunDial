@@ -115,6 +115,11 @@ def get_scenario_c(model_output_df, valid_date, t_start, t_final, rate, cost_thr
 
 app = dash.Dash()
 
+css_url = "https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"
+app.css.append_css({
+    "external_url": css_url
+})
+
 
 app.layout = html.Div(children=[
     html.H1(children='SunDial - solar energy cost optimization analysis'),
@@ -123,8 +128,8 @@ app.layout = html.Div(children=[
         dcc.DatePickerSingle(id="date-picker", date=dt(2016, 1, 5))
     ]),
     html.Button('Sumbit', id="submit-button"),
-
     dcc.Graph(id='model-graphs'),
+
 
     dcc.Graph(id='optimizer-graph')
 ])
@@ -138,7 +143,8 @@ def update_model_div(_, input_date):
     model_output_df = get_model_df(input_date)
     x = [i for i in range(24)]
 
-    fig = tools.make_subplots(rows=4, cols=1, vertical_spacing=0.2, subplot_titles=model_output_df.columns.values)
+    fig = tools.make_subplots(rows=4, cols=1, vertical_spacing=0.2)
+    print(fig)
     for i, column_name in enumerate(model_output_df.columns.values):
         trace = go.Scatter(
             x=x,
@@ -184,10 +190,12 @@ def update_optimizer_div(_, input_date):
         'data': traces,
         'layout': go.Layout(
             xaxis={'title': 'Hour'},
-            yaxis={'title': 'Cost'}
+            yaxis={'title': 'Cost'},
+            title="Cost Analysis",
+            width=800,
+            height=800
         )
     }
-
 
 
 if __name__ == '__main__':
