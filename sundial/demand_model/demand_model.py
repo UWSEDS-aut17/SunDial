@@ -100,15 +100,15 @@ def get_demand_cph():
 # %% Run and write demand
 
 #    import pandas
-#    
+#
 #    demand = get_demand_cph()
 #    demand[0] = demand[1]
-#    
+#
 #    hour = list(range(24))
 #    demand_df = {"demand_kwh": demand, "hour": hour}
-#    
+#
 #    df = pd.DataFrame.from_dict(demand_df)
-#    
-#    data_path = "C:\\Users\\Casey\\Google Drive\\Classes\\CSE 583 Software 
+#
+#    data_path = "C:\\Users\\Casey\\Google Drive\\Classes\\CSE 583 Software
 #                    Development for Data Scientists\\SunDial\\sundial/data"
 #    df.to_csv(data_path + "\\demand_hourly.csv")
