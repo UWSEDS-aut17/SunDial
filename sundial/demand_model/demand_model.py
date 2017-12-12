@@ -18,7 +18,8 @@ def get_demand_cph():
     demand_file = "/demand/USA_CA_Santa.Maria.Public.AP.723940_TMY3_BASE.csv"
     weather_obs_file = "1124193.csv"
     weather_obs_path = "/weather_obs/"
-    data_path = "sundial/data"
+    data_path = "C:\\Users\\Casey\\Google Drive\\Classes\\CSE 583 Software" +\
+                "Development for Data Scientists\\SunDial\\sundial/data"
 
     # %% Load Data
 
@@ -95,3 +96,19 @@ def get_demand_cph():
         demand_hourly.append(np.mean(demand_elec[i:len(demand_elec):23]))
 
     return demand_hourly
+
+# %% Run and write demand
+
+#    import pandas
+#    
+#    demand = get_demand_cph()
+#    demand[0] = demand[1]
+#    
+#    hour = list(range(24))
+#    demand_df = {"demand_kwh": demand, "hour": hour}
+#    
+#    df = pd.DataFrame.from_dict(demand_df)
+#    
+#    data_path = "C:\\Users\\Casey\\Google Drive\\Classes\\CSE 583 Software 
+#                    Development for Data Scientists\\SunDial\\sundial/data"
+#    df.to_csv(data_path + "\\demand_hourly.csv")
