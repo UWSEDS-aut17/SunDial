@@ -31,7 +31,7 @@ def get_price_output(date):
 
 
 def get_pv_output():
-    pv_output_cph = sundial.pv_model.pv_output_cph()  # (month,day)
+    pv_output_cph = sundial.pv_model.pv_output_cph('sundial/pv_model/finalized_model.pkl', 2016, 12, 15)  # (month,day)
     return pv_output_cph
 
 def get_demand_output():
@@ -40,18 +40,18 @@ def get_demand_output():
     return demand_cph['demand_kwh']
 
 
-def get_model_df(input_date):
+def get_model_df(input_date, t_start=18, t_final=22):
     valid_date = parser.parse(input_date)
 
     price_cph = get_price_output(valid_date.strftime('%Y-%m-%d'))
-    battery_cph = get_battery_output(valid_date.timetuple().tm_yday)
+    battery_cph = get_battery_output(valid_date.timetuple().tm_yday, t_start=t_start, t_final=t_final)
     demand_cph = get_demand_output()
-    # pv_cph = get_pv_output()
+    pv_cph = get_pv_output()
 
     df = pd.DataFrame({'battery_cph': battery_cph,
                        'price_cph': price_cph,
                        'demand_cph': demand_cph,
-                       'pv_out_cph': np.random.rand(24,)})
+                       'pv_out_cph': pv_cph})
     df['demand_cph'] = df['demand_cph'] * 10
     df['pv_out_cph'] = df['pv_out_cph'] * 20 / 250
     return df
@@ -218,10 +218,12 @@ app.layout = html.Div(children=[
 @app.callback(
     Output('model-graphs', 'figure'),
     [Input('final-submit-button', 'n_clicks')],
-    [State('date-picker', 'date')]
+    [State('date-picker', 'date'),
+     State('t_start', 'value'),
+     State('t_end', 'value')]
 )
-def update_model_div(_, input_date):
-    model_output_df = get_model_df(input_date)
+def update_model_div(_, input_date, t_start, t_end):
+    model_output_df = get_model_df(input_date, t_start=int(t_start), t_final=int(t_end))
     x = [i for i in range(24)]
 
     fig = tools.make_subplots(rows=4, cols=1, vertical_spacing=0.1)
@@ -238,7 +240,7 @@ def update_model_div(_, input_date):
         )
         fig.append_trace(trace, i + 1, 1)
 
-    fig['layout'].update(yaxis1={'title': 'Cost per Hour'}, yaxis2={'title': 'Cost per Hour'}, yaxis3={'title': 'KWhr'}, yaxis4={'title': 'KWhr'})
+    fig['layout'].update(yaxis1={'title': 'Cost per Hour'}, yaxis2={'title': 'KWhr'}, yaxis3={'title': 'Cost per Hour'}, yaxis4={'title': 'KWhr'})
     fig['layout'].update(height=650, width=500, title='Analysis Models')
     return fig
 
