@@ -17,7 +17,7 @@ opts = dict(
                               'dash_core_components',
                               'dash_html_components',
                               'plotly',
-                              ''],
+                              'dash-renderer'],
             author="Ryan Stoddard, Vardhman Mehta, Casey Pham, Michael Stepanovic, Ruchi Kwatra",
             description="A suite of solar energy cost optimization models",
             long_description=long_description,
