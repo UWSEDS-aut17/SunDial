@@ -12,10 +12,10 @@ End users have:
 - General knowledge in navigating a webpage.
 Co-developers have all of the knowledge of End User, plus knowledge of python programming and packeges we employ
 
-### Elements
+### Components/elements
 - What solar/battery feartures would be most responsible for optimizing costs?
 - What other elements (for eg. weather) are responsible for the costs?
-- See Flowchart schematic for our [workflow](Model_flowchart_outline.png)
+- See Flowchart schematic for our [workflow](../img/Model_flowchart_outline.png)
 - The following components of the workflow can be developed in paralel then integrated:
 1. Model to predict future utility costs (using historical utility data and weather forecast)
 2. Model to predict future energy demand (using histortical data, weather forecast)
