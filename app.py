@@ -11,8 +11,10 @@ import sundial
 import numpy as np
 
 
-def get_battery_output(date, usage_kWhr=8, t_start=18, t_final=22, cap_kWhr=100):
-    cost_mult = 10 * cap_kWhr  # cost scales with capacity, adjust to make relavent if needed
+def get_battery_output(date, usage_kWhr=8, t_start=18,
+                       t_final=22, cap_kWhr=100):
+    # cost scales with capacity, adjust to make relavent if needed
+    cost_mult = 10 * cap_kWhr
 
     # Compute battery degradation cost per hour.
     battery_cph = sundial.battery_model.bat_price_per_hour(usage_kWhr,
@@ -31,7 +33,10 @@ def get_price_output(date):
 
 
 def get_pv_output(date):
-    pv_output_cph = sundial.pv_model.pv_output_cph('sundial/pv_model/finalized_model.pkl', date.year, date.month, date.day)  # (month,day)
+    # (month,day)
+    pv_output_cph = sundial.\
+        pv_model.pv_output_cph('sundial/pv_model/finalized_model.pkl',
+                               date.year, date.month, date.day)
     return pv_output_cph
 
 
@@ -45,7 +50,8 @@ def get_model_df(input_date, t_start=18, t_final=22):
     valid_date = parser.parse(input_date)
 
     price_cph = get_price_output(valid_date.strftime('%Y-%m-%d'))
-    battery_cph = get_battery_output(valid_date.timetuple().tm_yday, t_start=t_start, t_final=t_final)
+    battery_cph = get_battery_output(valid_date.timetuple().tm_yday,
+                                     t_start=t_start, t_final=t_final)
     demand_cph = get_demand_output()
     pv_cph = get_pv_output(valid_date)
 
@@ -61,7 +67,8 @@ def get_model_df(input_date, t_start=18, t_final=22):
 def get_scenario_a(model_output_df, valid_date):
     dayofyear = valid_date.timetuple().tm_yday
     # Calculate Scenario A
-    model_output_df['Scenario_A'] = 1 * np.max([(model_output_df['price_cph'] / 1000 * (model_output_df['demand_cph'] -
+    model_output_df['Scenario_A'] = 1 * np.max([(model_output_df['price_cph'] / 1000
+                                                 * (model_output_df['demand_cph'] -
                                                  model_output_df['pv_out_cph'] - 0)), np.zeros(24)], axis=0) + \
                                     get_battery_output(dayofyear, usage_kWhr=0)
 
@@ -80,9 +87,11 @@ def get_scenario_b(model_output_df, valid_date, t_start, t_final, rate):
 
     # calculate scenario B
     model_output_df['Scenario_B'] = 1 * np.max(
-        [(model_output_df['price_cph'] / 1000 * (model_output_df['demand_cph'] - (model_output_df['pv_out_cph']
+        [(model_output_df['price_cph'] / 1000 * (model_output_df['demand_cph'] -
+                                                 (model_output_df['pv_out_cph']
                                                 - PV_balance) - B)), np.zeros(24)], axis=0) \
-            + get_battery_output(dayofyear, usage_kWhr=usage_kWhr, t_start=t_start, t_final=t_final, cap_kWhr=cap_kWhr)
+            + get_battery_output(dayofyear, usage_kWhr=usage_kWhr, t_start=t_start,
+                                 t_final=t_final, cap_kWhr=cap_kWhr)
 
     return model_output_df['Scenario_B'].cumsum()
 
@@ -108,8 +117,11 @@ def get_scenario_c(model_output_df, valid_date, t_start, t_final, rate, cost_thr
 
     # calculate scenario c
     model_output_df['Scenario_C'] = 1 * np.max(
-        [(model_output_df['price_cph'] / 1000 * (model_output_df['demand_cph'] - (model_output_df['pv_out_cph'] - PV_balance) - B)), np.zeros(24)],
-        axis=0) + get_battery_output(dayofyear, usage_kWhr=usage_kWhr, t_start=t_start, t_final=t_final, cap_kWhr=cap_kWhr)
+        [(model_output_df['price_cph'] / 1000 * (model_output_df['demand_cph'] -
+                                                 (model_output_df['pv_out_cph'] -
+                                                  PV_balance) - B)), np.zeros(24)], axis=0) \
+                                    + get_battery_output(dayofyear, usage_kWhr=usage_kWhr, t_start=t_start,
+                                     t_final=t_final, cap_kWhr=cap_kWhr)
 
     return model_output_df['Scenario_C'].cumsum()
 
@@ -242,7 +254,8 @@ def update_model_div(_, input_date, t_start, t_end):
         )
         fig.append_trace(trace, i + 1, 1)
 
-    fig['layout'].update(yaxis1={'title': 'Cost per Hour'}, yaxis2={'title': 'KWhr'}, yaxis3={'title': 'Cost per Hour'}, yaxis4={'title': 'KWhr'})
+    fig['layout'].update(yaxis1={'title': 'Cost per Hour'}, yaxis2={'title': 'KWhr'},
+                         yaxis3={'title': 'Cost per Hour'}, yaxis4={'title': 'KWhr'})
     fig['layout'].update(height=650, width=500, title='Analysis Models')
     return fig
 
@@ -254,14 +267,16 @@ def update_model_div(_, input_date, t_start, t_end):
      State('t_start', 'value'),
      State('t_end', 'value'),
      State('rate', 'value'),
-     State('cost_thresh', 'value'),]
+     State('cost_thresh', 'value')]
 )
 def update_optimizer_div(_, input_date, t_start, t_end, rate, cost_thresh):
     model_output_df = get_model_df(input_date)
     valid_date = parser.parse(input_date)
     scenario_df = pd.DataFrame({"Scenario_A": get_scenario_a(model_output_df, valid_date),
-                                "Scenario_B": get_scenario_b(model_output_df, valid_date, int(t_start), int(t_end), int(rate) / 100.0),
-                                "Scenario_C": get_scenario_c(model_output_df, valid_date, int(t_start), int(t_end), int(rate) / 100.0, int(cost_thresh))})
+                                "Scenario_B": get_scenario_b(model_output_df, valid_date, int(t_start),
+                                                             int(t_end), int(rate) / 100.0),
+                                "Scenario_C": get_scenario_c(model_output_df, valid_date, int(t_start),
+                                                             int(t_end), int(rate) / 100.0, int(cost_thresh))})
 
     x = [i for i in range(24)]
     traces = []

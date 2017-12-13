@@ -3,14 +3,7 @@ import seaborn
 import pandas as pd
 import datetime
 import matplotlib.pyplot as plt
-import sys
-import os
 from sklearn.svm import SVR
-from sklearn import neighbors
-from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LinearRegression
-from sklearn import linear_model
-from sklearn.metrics import mean_squared_error, r2_score
 from sklearn.grid_search import GridSearchCV
 from sklearn.externals import joblib
 seaborn.set()
