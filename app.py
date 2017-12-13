@@ -34,6 +34,7 @@ def get_pv_output(date):
     pv_output_cph = sundial.pv_model.pv_output_cph('sundial/pv_model/finalized_model.pkl', date.year, date.month, date.day)  # (month,day)
     return pv_output_cph
 
+
 def get_demand_output():
     # demand_cph = sundial.demand_model.get_demand_cph()
     demand_cph = pd.read_csv("sundial/data/demand_hourly.csv")
@@ -112,8 +113,8 @@ def get_scenario_c(model_output_df, valid_date, t_start, t_final, rate, cost_thr
 
     return model_output_df['Scenario_C'].cumsum()
 
-app = dash.Dash()
 
+app = dash.Dash()
 css_url = "https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"
 app.css.append_css({
     "external_url": css_url
@@ -214,6 +215,7 @@ app.layout = html.Div(children=[
         ], className='col', style={'text-align': 'center'}),
     ], className='row'),
 ], className='container', style={'margin-top': 25})
+
 
 @app.callback(
     Output('model-graphs', 'figure'),
