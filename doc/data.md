@@ -9,20 +9,21 @@ To fufill the aims decribed in the README, we require:
 5. Dataset on Solar cell output (solar irradiance vs. time)
 
 Sources
-Utility rates database: http://www.caiso.com/Pages/default.aspx
+Utility rates database
+- CA-ISO: http://www.caiso.com/Pages/default.aspx
 
 US weather data:
--Dark Sky Forecasts: https://darksky.net/dev
--Observed weather data: https://www.ncdc.noaa.gov/
+- Dark Sky Forecasts: https://darksky.net/dev
+- Observed weather data: https://www.ncdc.noaa.gov/
 
 US DOE:
--Energy Demand Data
+- Energy Demand Data: https://www.data.gov/energy/
 
 Solar Irradiance Data:
--NREL : http://rredc.nrel.gov/solar/old_data/nsrdb/
+- NREL: http://rredc.nrel.gov/solar/old_data/nsrdb/
 
 Battery / Solar data soruces:
-- Li-ion battery cycle data - http://www.calce.umd.edu/batteries/data.htm
+- Li-ion battery cycle data: http://www.calce.umd.edu/batteries/data.htm
 
 
 
