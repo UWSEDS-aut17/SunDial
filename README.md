@@ -8,6 +8,7 @@ A small demonstration of our final product:
 
 <a href="https://imgflip.com/gif/210n11"><img src="https://i.imgflip.com/210n11.gif" title="made at imgflip.com"/></a>
 
+UI demo link: https://www.youtube.com/watch?v=k8rrkSn-Hzk&feature=youtu.be
 ### Creators
 * Ruchi Kwatra
 * Vardhman Mehta
