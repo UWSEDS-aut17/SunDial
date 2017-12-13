@@ -1,11 +1,7 @@
-import sys
+import os
+os.chdir('../../')
 import unittest
 import numpy as np
-sys.path.append('/Users/ryanstoddard/Documents/UW/CSE_586/Project/SunDial')
-sys.path.append('/Users/ryanstoddard/Documents/UW/CSE_586/'
-                'Project/SunDial/sundail')
-sys.path.append('/Users/ryanstoddard/Documents/UW/CSE_586/'
-                'Project/SunDial/sundail/data')
 from sundial import battery_model
 
 
