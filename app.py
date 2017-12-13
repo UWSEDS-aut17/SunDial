@@ -30,8 +30,8 @@ def get_price_output(date):
     return price_cph
 
 
-def get_pv_output():
-    pv_output_cph = sundial.pv_model.pv_output_cph('sundial/pv_model/finalized_model.pkl', 2016, 12, 15)  # (month,day)
+def get_pv_output(date):
+    pv_output_cph = sundial.pv_model.pv_output_cph('sundial/pv_model/finalized_model.pkl', date.year, date.month, date.day)  # (month,day)
     return pv_output_cph
 
 def get_demand_output():
@@ -46,7 +46,7 @@ def get_model_df(input_date, t_start=18, t_final=22):
     price_cph = get_price_output(valid_date.strftime('%Y-%m-%d'))
     battery_cph = get_battery_output(valid_date.timetuple().tm_yday, t_start=t_start, t_final=t_final)
     demand_cph = get_demand_output()
-    pv_cph = get_pv_output()
+    pv_cph = get_pv_output(valid_date)
 
     df = pd.DataFrame({'battery_cph': battery_cph,
                        'price_cph': price_cph,
@@ -186,7 +186,7 @@ app.layout = html.Div(children=[
                 id='rate',
                 placeholder='rate',
                 type='number',
-                value='0.1'
+                value='10'
             ),
         ], className='col'),
         html.Div(children=[
@@ -258,8 +258,8 @@ def update_optimizer_div(_, input_date, t_start, t_end, rate, cost_thresh):
     model_output_df = get_model_df(input_date)
     valid_date = parser.parse(input_date)
     scenario_df = pd.DataFrame({"Scenario_A": get_scenario_a(model_output_df, valid_date),
-                                "Scenario_B": get_scenario_b(model_output_df, valid_date, int(t_start), int(t_end), float(rate)),
-                                "Scenario_C": get_scenario_c(model_output_df, valid_date, int(t_start), int(t_end), float(rate), int(cost_thresh))})
+                                "Scenario_B": get_scenario_b(model_output_df, valid_date, int(t_start), int(t_end), int(rate) / 100.0),
+                                "Scenario_C": get_scenario_c(model_output_df, valid_date, int(t_start), int(t_end), int(rate) / 100.0, int(cost_thresh))})
 
     x = [i for i in range(24)]
     traces = []
