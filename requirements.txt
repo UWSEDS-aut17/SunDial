@@ -6,3 +6,5 @@ dash_core_components
 dash_html_components
 plotly
 dash-renderer
+matplotlib
+seaborn
