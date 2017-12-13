@@ -4,6 +4,9 @@ With the costs of solar cells and batteries continuing to decline, solar cell-ba
 
 SunDial is a suite of machine learning models based on weather, utility, and solar cell-battery data to optimize solar battery utilization in a dynamic environment. Our platform will be built to scale for different energy needs, from single family homes to large data centers to county-wide electricity networks. Furthermore, we hope to produce a general economic viablity assessment of solar battery installations in different regions across the United States.
 
+A small demonstration of our final product
+<a href="https://imgflip.com/gif/210n11"><img src="https://i.imgflip.com/210n11.gif" title="made at imgflip.com"/></a>
+
 ### Creators
 * Ruchi Kwatra
 * Vardhman Mehta
