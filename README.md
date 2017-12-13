@@ -6,7 +6,7 @@ SunDial is a suite of machine learning models based on weather, utility, and sol
 
 A small demonstration of our final product:
 
-<a href="https://imgflip.com/gif/210n11"><img src="https://i.imgflip.com/210n11.gif" title="made at imgflip.com" width="500px" height="400px/></a>
+<a href="https://imgflip.com/gif/210n11"><img src="https://i.imgflip.com/210n11.gif" title="made at imgflip.com"/></a>
 
 ### Creators
 * Ruchi Kwatra
