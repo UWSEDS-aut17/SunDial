@@ -1,11 +1,8 @@
 import pandas as pd
-from pandas.plotting import scatter_matrix
-import matplotlib.pyplot as plt
 from sklearn import model_selection
 import numpy as np
 
 from sklearn import linear_model
-from sklearn.metrics import mean_squared_error, r2_score
 from sklearn.preprocessing import PolynomialFeatures
 
 # Train 2 models upon import, storage and cycle

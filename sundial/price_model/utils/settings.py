@@ -1,5 +1,5 @@
-SAVE_PLOTS=True
-SAVE_MODEL = True
+SAVE_PLOTS=False
+SAVE_MODEL = False
 
 # Folders
 PLOTS_FOLDER = "sundial/price_model/plots"

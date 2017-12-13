@@ -34,8 +34,7 @@ class EnergyPriceModel():
 
     def train_models(self):
         if not self.train:
-            print("Initialize with train")
-            return
+            raise ValueError("Not initialized as train")
 
         x_train, x_test, y_train, y_test = self.get_train_test_data()
 
@@ -74,13 +73,3 @@ class EnergyPriceModel():
 
     def load_model(self, path):
         return joblib.load(path)
-
-
-def main():
-    epm = EnergyPriceModel(train=True)
-    # epm.train_models()
-    print(epm.test_model("2016-01-02", "SVM_rbf"))
-
-
-if __name__ == '__main__':
-    main()
