@@ -20,37 +20,24 @@ A small demonstration of our final product:
 SunDial has the following structure:
 
     SunDial/
+      |- app.py
       |- LICENSE
       |- README.md
       |- requirements.txt
       |- setup.py
       |- doc/
-         |- bat_model.md
          |- components.md
          |- data.md
          |- functionalspecs.md
-         |- update_111217.md
+         |- ...
       |- examples/
          |- model_usage_example.py
          |- ipynb/
-            |- BatPlots.ipynb
-            |- Downloading_Data.ipynb
-            |- Gaussian_Model.ipynb
-            |- KNN_Model.ipynb
-            |- Loading_Data_and_Defining_subtasks.ipynb
-            |- model_usage_example.ipynb
-            |- parse_cycledata.ipynb
-            |- parse_storagedata.ipynb
-            |- train_cycle.ipynb
-            |- train_shelf.ipynb
-      |- img/
-         |- intro_pic.jpg
-         |- model_flowchart_outline.png
-         |- price_model_plots/
             |- ...
+      |- img/
+         |- ...
       |- sundial/
          |- __init__.py
-         |- optimizer.py
          |- data/
             |- ...
          |- battery_model/
@@ -65,17 +52,25 @@ SunDial has the following structure:
             |- ...
 
 
-In the following sections we will examine these elements one by one. First,
-let's consider the core of the project. This is the code inside of
-`SunDial/SunDial.py`. The code provided in this file _____.
 
 ### Module code
 
-Sundial contains submodules for each model. These models are initialized
+SunDial has two user modes: a quickstart dashboard mode, and a command-line mode. All functionality can be accessed using `app.py`:
+
+```
+python setup.py install
+```
+
+```
+python app.py
+```
+
+At the command line, SunDial contains submodules for each model. These models are initialized
 by importing the `sundial` module, and then their corresponding functions are
-available via the command line:
+available via the command line. Requirements can be installed from `setup.py`.
 
 ```python
+
 import sundial as sd
 
 tomorrow = "2017-12-14"
