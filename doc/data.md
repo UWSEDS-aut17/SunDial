@@ -27,6 +27,7 @@ Battery / Solar data soruces:
 
 
 Evaluation
+
 |                     | DarkSky | Cal-ISO | NREL | CALCE | DOE |
 |---------------------|---------|---------|------|-------|-----|
 | Weather Forecast    |    x    |         |      |       |     |
