@@ -1,8 +1,16 @@
 # -*- coding: utf-8 -*-
 """
-Spyder Editor
 
-This is a temporary script file.
+This component looks at energy demand and correlates/groups it with weather 
+observations to determine patterns in demand (ie higher demand when hot/cold).
+
+Inputs:
+Energy demand data
+Weather observations (temperature, cloud cover)
+
+Outputs:
+Energy demand correlation with various weather conditions
+
 """
 
 # %% Setup
