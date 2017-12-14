@@ -11,6 +11,10 @@ Weather observations (temperature, cloud cover)
 Outputs:
 Energy demand correlation with various weather conditions
 
+Note: This particular package is run locally to output the result to a CSV, as
+running this in parallel with the final product results in lengthy wait times.
+Thus, the path to the needed data file is particular to the creator's filepath.
+
 """
 
 # %% Setup
@@ -23,11 +27,11 @@ def get_demand_cph():
     import matplotlib.pyplot as plt
     import seaborn as sns
 
-    demand_file = "/demand/USA_CA_Santa.Maria.Public.AP.723940_TMY3_BASE.csv"
+    demand_file = "\\demand/USA_CA_Santa.Maria.Public.AP.723940_TMY3_BASE.csv"
     weather_obs_file = "1124193.csv"
-    weather_obs_path = "/weather_obs/"
+    weather_obs_path = "\\weather_obs\\"
     data_path = "C:\\Users\\Casey\\Google Drive\\Classes\\CSE 583 Software" +\
-                "Development for Data Scientists\\SunDial\\sundial/data"
+                " Development for Data Scientists\\SunDial\\sundial\\data"
 
     # %% Load Data
 
@@ -108,7 +112,7 @@ def get_demand_cph():
 # %% Run and write demand
 
 #    import pandas
-#
+#    
 #    demand = get_demand_cph()
 #    demand[0] = demand[1]
 #
