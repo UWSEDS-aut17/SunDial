@@ -21,6 +21,11 @@ def get_train_test_data(df_price_frame):
 
 
 def tune_models(df_price_frame):
+    """
+    tune models using different regressors
+    :param df_price_frame:
+    :return:
+    """
     x_train, x_test, y_train, y_test = \
         get_train_test_data(df_price_frame)
     tune_svr(x_train, y_train, x_test, y_test)
@@ -29,6 +34,14 @@ def tune_models(df_price_frame):
 
 
 def tune_svr(x_train, y_train, x_test, y_test):
+    """
+    SVR regressor with grid search
+    :param x_train:
+    :param y_train:
+    :param x_test:
+    :param y_test:
+    :return:
+    """
     C_range = range(1000, 3000, 1000)
     tuned_parameters = [{
         "C": C_range,
@@ -54,6 +67,14 @@ def tune_svr(x_train, y_train, x_test, y_test):
 
 
 def tune_knn(x_train, y_train, x_test, y_test):
+    """
+    KNN regressor with grid search
+    :param x_train:
+    :param y_train:
+    :param x_test:
+    :param y_test:
+    :return:
+    """
     n_range = range(1, 10, 1)
     tuned_parameters = [{
         "n_neighbors": n_range
@@ -78,6 +99,14 @@ def tune_knn(x_train, y_train, x_test, y_test):
 
 
 def tune_lin_reg(x_train, y_train, x_test, y_test):
+    """
+    Linear regressor with grid search
+    :param x_train:
+    :param y_train:
+    :param x_test:
+    :param y_test:
+    :return:
+    """
     lin_reg = linear_model.LinearRegression(normalize=True)
     y_pred = lin_reg.fit(x_train, y_train).predict(x_test)
 
@@ -93,6 +122,15 @@ def tune_lin_reg(x_train, y_train, x_test, y_test):
 
 
 def plot_predictions(x_test, y_test, y_pred, model_name, path):
+    """
+    plot predictions from models
+    :param x_test:
+    :param y_test:
+    :param y_pred:
+    :param model_name:
+    :param path:
+    :return:
+    """
     plt.figure(figsize=(15, 7))
     plt.scatter(x_test.index, y_test, c='k', label='Observed')
     plt.plot(x_test.index, y_pred, c='r', label='Predicted')
@@ -104,6 +142,14 @@ def plot_predictions(x_test, y_test, y_pred, model_name, path):
 
 
 def plot_pred_test_relation(y_test, y_pred, model_name, path):
+    """
+    plot the confusion matrix type graph
+    :param y_test:
+    :param y_pred:
+    :param model_name:
+    :param path:
+    :return:
+    """
     plt.figure(figsize=(6, 6))
     plt.scatter(y_test, y_test, c='k')
     plt.scatter(y_test, y_pred, c='r')

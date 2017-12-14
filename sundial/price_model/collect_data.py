@@ -6,6 +6,7 @@ from bs4 import BeautifulSoup
 DATA_FOLDER = "../data/Energy_Price"
 RESULT_FILENAME = "../data/sm_price/price_time.csv"
 
+# Script to collect data in dataframes and save it in the data folder
 
 def load_xml(data_file):
     print(data_file)

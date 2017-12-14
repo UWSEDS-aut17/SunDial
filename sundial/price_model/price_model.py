@@ -20,6 +20,11 @@ REGRESSORS = {
 
 
 class EnergyPriceModel():
+    """
+    Use this class to train or test a Price model
+    set the train flag to train the model.
+    make sure the data is in the data folder
+    """
     def __init__(self, train=False):
         self.train = train
         price_frame = pd.read_csv(PRICE_DATA_FILENAME, index_col=0)
@@ -27,12 +32,22 @@ class EnergyPriceModel():
         self.df_price_frame = self.df_price_frame.dropna()
 
     def get_train_test_data(self):
+        """
+        splits into test and train set
+        :return: a test and train set for features and labels
+        """
         X_price_frame = self.df_price_frame.drop('lmp_value', axis=1).\
             reset_index().drop('time', axis=1)
         Y_price_frame = self.df_price_frame['lmp_value']
         return train_test_split(X_price_frame, Y_price_frame, shuffle=False)
 
     def train_models(self):
+        """
+        trains the model using differsnt regressors
+        saves the model and plots depending on the flag set
+        in utils/settings.py
+        :return: None
+        """
         if not self.train:
             raise ValueError("Not initialized as train")
 
@@ -60,6 +75,13 @@ class EnergyPriceModel():
                 self.save_model(reg_model, target_folder)
 
     def test_model(self, test_date, model_name):
+        """
+        tests the model using the input date and a model to use to
+        get the predictions from
+        :param test_date: input date
+        :param model_name: model to use
+        :return: a 24 length array of predictions.
+        """
         load_path = os.path.join(MODEL_FOLDER, "{0}.model".format(model_name))
         reg_model = self.load_model(load_path)
         begin = test_date + ' 00:00:00'

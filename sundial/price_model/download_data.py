@@ -1,11 +1,11 @@
-import os
-import numpy as np
-import utils
+import sundial.price_model.utils.utils as utils
 
 NODE_LOCATION = 'STMARIA_7_N101'
 
 start_times = ['20160915', '20160829', '20160927', '20161026', '20161124']
 end_times = ['20160928', '20160927', '20161026', '20161124', '20161222']
+
+# Script to download data for the entire time range from CAISO
 
 xml_fn = []
 for (s_time, e_time) in zip(start_times, end_times):

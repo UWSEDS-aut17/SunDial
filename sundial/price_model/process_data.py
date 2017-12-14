@@ -65,6 +65,9 @@ def process_data():
 
 def get_date_range(df_price_frame, train_start, train_end, test_start,
                    test_end):
+    """
+    gets the data for the give date range. Used for parameter tuning
+    """
     train_mask = (df_price_frame.index > train_start) &\
         (df_price_frame.index < train_end) & (df_price_frame["hour"] >= 0)
     test_mask = (df_price_frame.index > test_start) &\
