@@ -126,7 +126,8 @@ def bat_cycle(cycles, soc_low, soc_high, rate):
 
 
 def bat_day(soc, temp, cycles, soc_low, soc_high, rate):
-    """Model the degradation from the battery in one day
+    """Model the degradation from the battery in one day. This was a test 
+    model that isn't used in the finak optimizer
     """
     # Maybe add some code to check inputs are OK range, etc.
     DegCycle = bat_cycle(400, soc_low, soc_high, rate)**(cycles/400)
@@ -136,7 +137,8 @@ def bat_day(soc, temp, cycles, soc_low, soc_high, rate):
 
 
 def bat_day2(soc, temp, cycles, soc_low, soc_high, rate):
-    """Model the degradation from the battery in one day
+    """Model the degradation from the battery in one day. This was a test
+    model that isn't used in the final optimizer
     """
     # Maybe add some code to check inputs are OK range, etc.
     DegCycle = bat_cycle(cycles, soc_low, soc_high, rate)
