@@ -13,6 +13,15 @@ import numpy as np
 
 def get_battery_output(date, usage_kWhr=8, t_start=18,
                        t_final=22, cap_kWhr=100):
+    """
+    get battery data from the battery model using the input params.
+    :param date: date from dash app
+    :param usage_kWhr: usage per hour
+    :param t_start: start time for battery usage
+    :param t_final: end time for battery usage
+    :param cap_kWhr: max battery usage
+    :return: a 24 len arrey of battery output data
+    """
     # cost scales with capacity, adjust to make relavent if needed
     cost_mult = 10 * cap_kWhr
 
@@ -27,12 +36,22 @@ def get_battery_output(date, usage_kWhr=8, t_start=18,
 
 
 def get_price_output(date):
+    """
+    get price data from the price model
+    :param date: date form dash app
+    :return: a 24 len array of price data
+    """
     epm = sundial.price_model.EnergyPriceModel()
     price_cph = epm.test_model(date, "SVM_rbf")
     return price_cph
 
 
 def get_pv_output(date):
+    """
+    get pv_output data from the pv_output model
+    :param date: date form dash app
+    :return: a 24 len array of pv_output data
+    """
     # (month,day)
     pv_output_cph = sundial.\
         pv_model.pv_output_cph('pv_model/finalized_model.pkl',
@@ -41,11 +60,24 @@ def get_pv_output(date):
 
 
 def get_demand_output():
+    """
+        get demand data from the demand model
+        :param date: date form dash app
+        :return: a 24 len array of demand data
+    """
     demand_cph = pd.read_csv("data/demand_hourly.csv")
     return demand_cph['demand_kwh']
 
 
 def get_model_df(input_date, t_start=18, t_final=22):
+    """
+    Get all data from models using the user input and return a
+    dataframe consisting of this data
+    :param input_date: date from dash app
+    :param t_start: start interval of battery usage
+    :param t_final: end interval of battery usage
+    :return: a dataframe (4x24) consisting all 4 model's data
+    """
     valid_date = parser.parse(input_date)
 
     price_cph = get_price_output(valid_date.strftime('%Y-%m-%d'))
@@ -64,6 +96,12 @@ def get_model_df(input_date, t_start=18, t_final=22):
 
 
 def get_scenario_a(model_output_df, valid_date):
+    """
+    Compute results for scenario_a
+    :param model_output_df: the data from models
+    :param valid_date: date from dash app
+    :return: a column with a cumulative sum of cost for scenario_A
+    """
     dayofyear = valid_date.timetuple().tm_yday
     # Calculate Scenario A
     model_output_df['Scenario_A'] = 1 * np.max([(model_output_df['price_cph'] / 1000
@@ -75,6 +113,12 @@ def get_scenario_a(model_output_df, valid_date):
 
 
 def get_scenario_b(model_output_df, valid_date, t_start, t_final, rate):
+    """
+        Compute results for scenario_b
+        :param model_output_df: the data from models
+        :param valid_date: date from dash app
+        :return: a column with a cumulative sum of cost for scenario_b
+    """
     dayofyear = valid_date.timetuple().tm_yday
     cap_kWhr = 100
     usage_kWhr = np.min([cap_kWhr * rate * (t_final - t_start), cap_kWhr])
@@ -96,6 +140,12 @@ def get_scenario_b(model_output_df, valid_date, t_start, t_final, rate):
 
 
 def get_scenario_c(model_output_df, valid_date, t_start, t_final, rate, cost_thresh):
+    """
+        Compute results for scenario_c
+        :param model_output_df: the data from models
+        :param valid_date: date from dash app
+        :return: a column with a cumulative sum of cost for scenario_C
+    """
     dayofyear = valid_date.timetuple().tm_yday
     cap_kWhr = 100
     is_higher = np.nonzero(model_output_df['price_cph'] > cost_thresh)
