@@ -1,8 +1,9 @@
-import unittest
-import numpy as np
-from sundial import battery_model
 import os
 os.chdir('../')
+import unittest
+import numpy as np
+from sundial import pv_model
+
 
 
 class UtilsTest(unittest.TestCase):
