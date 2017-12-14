@@ -137,6 +137,8 @@ def get_data_split(year3, month3, day3):
 
     return (x_train, y_train, x_test, y_test)
 
+# Using the SVM_rbf regressor for anlyzing the data
+
 
 def SVM_regressor(year3, month3, day3):
     x_train, y_train, x_test, y_test = get_data_split(year3, month3, day3)
@@ -146,11 +148,14 @@ def SVM_regressor(year3, month3, day3):
     C_range = (1, 500, 1000)
     tuned_parameters = [{'kernel': ['rbf'], 'C': C_range,
                          'gamma': gamma_range, 'epsilon': epsilon_range}]
+    # grid searching for tuned hyperparameter
 
     svr_rbf = GridSearchCV(SVR(), param_grid=tuned_parameters, verbose=0)
     y_svr = svr_rbf.fit(x_train, y_train).predict(x_test)
 
     return(svr_rbf)
+
+# saving the SVM_rbf regressor modelfor the test date
 
 
 def save_model(saved_model):
@@ -158,6 +163,8 @@ def save_model(saved_model):
     joblib.dump(svr_rbf_test, saved_model)
 
     return(svr_rbf_test, saved_model)
+
+# Loading the SVM_rbf regressor model for preditions
 
 
 def load_model(saved_model, year, month, day):
@@ -176,6 +183,8 @@ def load_model(saved_model, year, month, day):
 
     return(y_pred)
 
+# Plotting the predicted data
+
 
 def plot(saved_model, year, month, day):
 
@@ -193,6 +202,8 @@ def plot(saved_model, year, month, day):
     plt.show(block=True)
     # print(y_pred)
     return(y_pred)
+
+# Calling the pv_output model using following function
 
 
 def pv_output_cph(saved_model, year, month, day):
