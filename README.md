@@ -21,7 +21,6 @@ UI demo link: https://www.youtube.com/watch?v=k8rrkSn-Hzk&feature=youtu.be
 SunDial has the following structure:
 
     SunDial/
-      |- app.py
       |- LICENSE
       |- README.md
       |- requirements.txt
@@ -38,6 +37,7 @@ SunDial has the following structure:
       |- img/
          |- ...
       |- sundial/
+         |- app.py
          |- __init__.py
          |- data/
             |- ...
@@ -56,7 +56,7 @@ SunDial has the following structure:
 
 ### Module code
 
-SunDial has two user modes: a quickstart dashboard mode, and a command-line mode. All functionality can be accessed using `app.py`:
+SunDial has two user modes: a quickstart dashboard mode, and a command-line mode. All functionality can be accessed using `sundial/app.py`:
 
 ```
 python setup.py install

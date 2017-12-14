@@ -1,5 +1,5 @@
 import os
-os.chdir('../../')
+os.chdir('../')
 import unittest
 from sundial.price_model import price_model
 

@@ -19,7 +19,7 @@ class Test(unittest.TestCase):
         with self.assertRaises(Exception):
             try:
                 demand_model.get_demand_cph()
-            except Execption:
+            except Exception:
                 pass
             else:
                 raise Exception

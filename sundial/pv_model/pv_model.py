@@ -9,8 +9,8 @@ from sklearn.externals import joblib
 seaborn.set()
 
 # fetching the data
-data = pd.read_csv('sundial/data/SM_forecast_2016.csv', delimiter=',')
-solar = np.loadtxt('sundial/data/solar_data_SM_2016.csv', delimiter=',',
+data = pd.read_csv('data/SM_forecast_2016.csv', delimiter=',')
+solar = np.loadtxt('data/solar_data_SM_2016.csv', delimiter=',',
                    skiprows=1)
 
 # Declaring the constants
@@ -203,4 +203,4 @@ def pv_output_cph(saved_model, year, month, day):
 
 
 # example running code :
-# pv_output_cph('sundial/pv_model/finalized_model.pkl', 2016, 12, 15)
+# pv_output_cph('pv_model/finalized_model.pkl', 2016, 12, 15)

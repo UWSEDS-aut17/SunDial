@@ -35,14 +35,13 @@ def get_price_output(date):
 def get_pv_output(date):
     # (month,day)
     pv_output_cph = sundial.\
-        pv_model.pv_output_cph('sundial/pv_model/finalized_model.pkl',
+        pv_model.pv_output_cph('pv_model/finalized_model.pkl',
                                date.year, date.month, date.day)
     return pv_output_cph
 
 
 def get_demand_output():
-    # demand_cph = sundial.demand_model.get_demand_cph()
-    demand_cph = pd.read_csv("sundial/data/demand_hourly.csv")
+    demand_cph = pd.read_csv("data/demand_hourly.csv")
     return demand_cph['demand_kwh']
 
 

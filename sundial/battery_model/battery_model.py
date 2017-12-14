@@ -10,7 +10,7 @@ from sklearn.preprocessing import PolynomialFeatures
 # cycling
 # need to add test to check presence of these csv files
 
-dataset = pd.read_csv('sundial/data/bat_shelf.csv')
+dataset = pd.read_csv('data/bat_shelf.csv')
 dataset[dataset['Cap'] > 1] = 1
 dataset = dataset[dataset.Cap != 0]
 
@@ -50,7 +50,7 @@ Y_pred = regr.predict(X2_validation)
 # now train model for degradation from cycling
 # add test to check for csv
 
-dataset = pd.read_csv('sundial/data/bat_cycle.csv')
+dataset = pd.read_csv('data/bat_cycle.csv')
 
 # Try with adding polynomial features
 
@@ -87,7 +87,7 @@ Y_pred = regr2.predict(X2_validation)
 
 # load temperature data to input into battery model
 
-df = pd.read_csv('sundial/data/SM_forecast_2016.csv')
+df = pd.read_csv('data/SM_forecast_2016.csv')
 df['temperature'] = (df['temperature'] - 32)*(5/9)
 daily_temp = []
 

@@ -1,5 +1,5 @@
 import os
-os.chdir('../../')
+os.chdir('../')
 import unittest
 import numpy as np
 from sundial import battery_model

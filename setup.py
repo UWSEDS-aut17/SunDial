@@ -5,6 +5,11 @@ from setuptools import find_packages
 with open(os.path.join('.', 'README.md')) as file:
     long_description = file.read()
 
+
+datadir = os.path.join('sundial','data')
+datafiles = [(d, [os.path.join(d,f) for f in files])
+    for d, folders, files in os.walk(datadir)]
+
 opts = dict(
             name="SunDial",
             version="0.1",
@@ -24,7 +29,9 @@ opts = dict(
             description="A suite of solar energy cost optimization models",
             long_description=long_description,
             license="MIT",
-            keywords="optimization, solar_data_analysis"
+            keywords="optimization, solar_data_analysis",
+            include_package_data=True,
+            data_files=datafiles
     )
 
 if __name__ == "__main__":
